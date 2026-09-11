@@ -7,6 +7,11 @@ export const validateRegistrationForm = (formData) => {
 
   if (!formData.childDob || !formData.childDob.trim()) {
     errors.childDob = 'Please select child\'s date of birth';
+  } else {
+    const dobYear = new Date(formData.childDob).getFullYear();
+    if (isNaN(dobYear) || dobYear < 2021 || dobYear > 2025) {
+      errors.childDob = 'Date of birth must be between year 2021 and 2025 (Max 5 years)';
+    }
   }
 
   if (!formData.childAge || formData.childAge === '') {

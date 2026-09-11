@@ -204,6 +204,8 @@ export const Register = () => {
               <input
                 type="date"
                 name="childDob"
+                min="2021-01-01"
+                max="2025-12-31"
                 value={formData.childDob}
                 onChange={handleChange}
                 className={`w-full px-4 py-2.5 sm:py-3 bg-amber-50/60 rounded-xl border-2 text-xs sm:text-sm text-amber-950 placeholder-amber-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-200 transition-all ${errors.childDob ? 'border-rose-500' : 'border-amber-300/80 focus:border-orange-500'
