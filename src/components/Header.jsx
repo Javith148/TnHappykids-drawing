@@ -86,8 +86,8 @@ export const Header = () => {
           ))}
         </nav>
 
-        {/* Right: Language Dropdown Selector & Register Now Button */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right: Desktop Language Dropdown Selector & Register Now Button */}
+        <div className="hidden md:flex items-center gap-2 sm:gap-3">
           {/* Language Dropdown */}
           <div className="relative">
             <button
@@ -140,7 +140,7 @@ export const Header = () => {
           {!hideRegisterBtn && (
             <Link
               to="/register"
-              className="hidden md:flex relative group px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full font-bold text-sm shadow-md hover:shadow-orange-500/30 transition-all duration-300 items-center gap-2 cursor-pointer border border-amber-300"
+              className="relative group px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full font-bold text-sm shadow-md hover:shadow-orange-500/30 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-amber-300"
             >
               <Sparkles className="w-4 h-4 text-yellow-200 animate-pulse" />
               <span>{t('registerNow')}</span>
@@ -149,18 +149,10 @@ export const Header = () => {
         </div>
 
         {/* Mobile Hamburger Button */}
-        <div className="flex items-center md:hidden gap-2">
-          {!hideRegisterBtn && (
-            <Link
-              to="/register"
-              className="px-3.5 py-1.5 bg-orange-500 text-white rounded-full font-bold text-xs shadow-sm flex items-center gap-1"
-            >
-              <span>Register</span>
-            </Link>
-          )}
+        <div className="flex items-center md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-amber-200/50 text-amber-900 hover:bg-amber-200 focus:outline-none cursor-pointer"
+            className="p-2.5 rounded-xl bg-amber-200/60 text-amber-900 hover:bg-amber-200 focus:outline-none cursor-pointer border border-amber-300 shadow-sm"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -175,28 +167,62 @@ export const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-amber-50/95 border-b border-amber-200 px-4 pt-3 pb-6 shadow-xl backdrop-blur-md overflow-hidden"
+            className="md:hidden bg-amber-50/98 border-b-2 border-amber-300 px-4 pt-3 pb-6 shadow-2xl backdrop-blur-md overflow-hidden"
           >
             <div className="flex flex-col space-y-2">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
                   onClick={() => handleNavClick(link.path)}
-                  className="w-full text-left px-4 py-3 rounded-xl font-semibold text-amber-900 hover:bg-amber-100 flex items-center gap-3"
+                  className="w-full text-left px-4 py-3 rounded-xl font-bold text-amber-950 hover:bg-amber-100 flex items-center gap-3 transition-colors cursor-pointer"
                 >
                   <link.icon className="w-5 h-5 text-orange-500" />
                   <span>{link.name}</span>
                 </button>
               ))}
+
+              {/* Mobile Language Switcher inside Burger Menu */}
+              <div className="pt-3 border-t border-amber-200 mt-2">
+                <div className="text-xs font-extrabold text-amber-900/80 mb-2 flex items-center gap-1.5 px-1 uppercase tracking-wider">
+                  <Globe className="w-4 h-4 text-orange-600" />
+                  <span>{t('language') || 'Language'}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all cursor-pointer ${
+                      language === 'en'
+                        ? 'bg-orange-500 text-white border-orange-600 shadow-md'
+                        : 'bg-white text-amber-950 border-amber-300 hover:bg-amber-100'
+                    }`}
+                  >
+                    <span>🇬🇧 English</span>
+                    {language === 'en' && <Check className="w-4 h-4 text-white" />}
+                  </button>
+                  <button
+                    onClick={() => setLanguage('ta')}
+                    className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all cursor-pointer ${
+                      language === 'ta'
+                        ? 'bg-orange-500 text-white border-orange-600 shadow-md'
+                        : 'bg-white text-amber-950 border-amber-300 hover:bg-amber-100'
+                    }`}
+                  >
+                    <span>🇮🇳 தமிழ்</span>
+                    {language === 'ta' && <Check className="w-4 h-4 text-white" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Mobile Register Button inside Burger Menu */}
               {!hideRegisterBtn && (
-                <div className="pt-2">
+                <div className="pt-3">
                   <Link
                     to="/register"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-center rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white text-center rounded-2xl font-bold text-sm shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 border-2 border-yellow-300"
                   >
-                    <Sparkles className="w-4 h-4 text-yellow-200" />
-                    <span>Register Now (Aged 3-5)</span>
+                    <Sparkles className="w-4 h-4 text-yellow-200 animate-pulse" />
+                    <span>{t('registerNow')}</span>
                   </Link>
                 </div>
               )}
