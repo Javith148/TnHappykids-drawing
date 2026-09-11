@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { CheckCircle2, Home, Sparkles, Award, User, Calendar, FileText, RefreshCw } from 'lucide-react';
 import { FestiveBackground } from '../components/FestiveBackground';
+import { CertificateModal } from '../components/CertificateModal';
 import { useCompetition } from '../context/CompetitionContext';
 
 export const Complete = () => {
   const navigate = useNavigate();
   const { data, resetAll } = useCompetition();
+  const [isCertOpen, setIsCertOpen] = useState(false);
 
   useEffect(() => {
     // Grand final celebratory confetti
@@ -118,6 +120,27 @@ export const Complete = () => {
             </div>
           </div>
 
+          {/* E-Certificate Callout Banner */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl text-white shadow-lg border-2 border-yellow-300 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="text-left">
+              <span className="text-xs font-black uppercase tracking-wider text-yellow-200 block">
+                ✨ Official E-Certificate Ready ✨
+              </span>
+              <p className="text-xs sm:text-sm font-bold text-amber-50 mt-0.5">
+                Download your child's Drawing Competition Completion Certificate or send to Gmail!
+              </p>
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCertOpen(true)}
+              className="px-5 py-2.5 bg-white text-orange-600 font-extrabold text-xs sm:text-sm rounded-xl shadow-md flex items-center gap-2 shrink-0 cursor-pointer border border-amber-200"
+            >
+              <Award className="w-4 h-4 text-orange-600" />
+              <span>Get E-Certificate 🎓</span>
+            </motion.button>
+          </div>
+
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
@@ -138,6 +161,13 @@ export const Complete = () => {
             </motion.button>
           </div>
         </motion.div>
+
+        {/* E-Certificate Modal Component */}
+        <CertificateModal
+          isOpen={isCertOpen}
+          onClose={() => setIsCertOpen(false)}
+          data={data}
+        />
       </div>
     </FestiveBackground>
   );
