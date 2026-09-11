@@ -1,11 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { Download, Mail, CheckCircle2, X, Sparkles, Award, Calendar, User, Send, ShieldCheck, Loader2 } from 'lucide-react';
+import { Download, Mail, X, Award, Send, ShieldCheck, Loader2, CheckCircle2 } from 'lucide-react';
+import logoImg from '../assets/images/logo.png';
 
 export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
-  const certificateRef = useRef(null);
   const [emailInput, setEmailInput] = useState(data.parentEmail || '');
   const [isSending, setIsSending] = useState(false);
   const [statusMsg, setStatusMsg] = useState(null);
@@ -20,85 +18,198 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
   const childAge = data.childAge ? `${data.childAge} Years` : 'Up to 5 Years';
   const parentName = data.parentName || 'Parent / Guardian';
 
-  // Helper to capture certificate element as canvas
-  const getCertificateCanvas = async () => {
-    if (!certificateRef.current) return null;
-    return await html2canvas(certificateRef.current, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      logging: false,
-      backgroundColor: '#FFFDF5',
-      windowWidth: 1024,
-      onclone: (clonedDoc) => {
-        const allNodes = clonedDoc.querySelectorAll('*');
-        allNodes.forEach((node) => {
-          const style = window.getComputedStyle(node);
-          ['color', 'backgroundColor', 'borderColor', 'outlineColor'].forEach((attr) => {
-            const val = style.getPropertyValue(attr);
-            if (val && val.includes('oklch')) {
-              node.style.setProperty(attr, attr.includes('background') ? '#FFFDF5' : '#1E293B', 'important');
-            }
-          });
-        });
-      },
-    });
+  // Guaranteed pure HTML5 2D Canvas HD Image Generator (100% reliable)
+  const generateCertificateImagePNG = async () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1600;
+    canvas.height = 1130;
+    const ctx = canvas.getContext('2d');
+
+    // 1. Fill Background
+    ctx.fillStyle = '#FFFDF5';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Outer Heavy Gold Border
+    ctx.strokeStyle = '#D97706';
+    ctx.lineWidth = 26;
+    ctx.strokeRect(13, 13, canvas.width - 26, canvas.height - 26);
+
+    // 3. Inner Fine Double Gold Borders
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 5;
+    ctx.strokeRect(34, 34, canvas.width - 68, canvas.height - 68);
+
+    ctx.strokeStyle = '#FDE68A';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(46, 46, canvas.width - 92, canvas.height - 92);
+
+    // 4. Load Logo Image onto Canvas
+    try {
+      const img = new Image();
+      img.src = logoImg;
+      await new Promise((resolve) => {
+        img.onload = resolve;
+        img.onerror = resolve; // fallback if image fails
+      });
+      if (img.complete && img.naturalWidth !== 0) {
+        const logoWidth = 140;
+        const logoHeight = (img.naturalHeight * logoWidth) / img.naturalWidth;
+        ctx.drawImage(img, (canvas.width - logoWidth) / 2, 70, logoWidth, logoHeight);
+      }
+    } catch (e) {
+      console.log('Logo render fallback:', e);
+    }
+
+    // 5. Header Text
+    ctx.fillStyle = '#B45309';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('TN HAPPY KIDS • STATE LEVEL COMPETITION 2026', canvas.width / 2, 195);
+
+    // Title
+    ctx.fillStyle = '#EA580C';
+    ctx.font = 'bold 64px Georgia, serif';
+    ctx.fillText('Certificate of Completion', canvas.width / 2, 275);
+
+    // Subtitle
+    ctx.fillStyle = '#78350F';
+    ctx.font = 'italic bold 24px sans-serif';
+    ctx.fillText('Vinayagar Chaturthi Kids State Level Drawing & Activity Contest', canvas.width / 2, 325);
+
+    // Divider Line
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(350, 355);
+    ctx.lineTo(canvas.width - 350, 355);
+    ctx.stroke();
+
+    // 6. Recipient Section
+    ctx.fillStyle = '#64748B';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText('THIS IS PROUDLY PRESENTED TO', canvas.width / 2, 430);
+
+    // Child Name
+    ctx.fillStyle = '#451A03';
+    ctx.font = 'bold 68px Georgia, serif';
+    ctx.fillText(childName, canvas.width / 2, 520);
+
+    // Name Underline
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(400, 550);
+    ctx.lineTo(canvas.width - 400, 550);
+    ctx.stroke();
+
+    // Age & Parent Name
+    ctx.fillStyle = '#78350F';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(`Age: ${childAge}   •   Parent / Guardian: ${parentName}`, canvas.width / 2, 610);
+
+    // Appreciation Paragraph
+    ctx.fillStyle = '#334155';
+    ctx.font = '22px sans-serif';
+    ctx.fillText('For successfully participating & demonstrating remarkable artistic creativity in the', canvas.width / 2, 685);
+
+    ctx.fillStyle = '#78350F';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillText('TN Happy Kids State Level Vinayagar Chaturthi Drawing Competition 2026.', canvas.width / 2, 725);
+
+    // 7. Footer Divider Line
+    ctx.strokeStyle = '#CBD5E1';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(120, 870);
+    ctx.lineTo(canvas.width - 120, 870);
+    ctx.stroke();
+
+    // Date (Left)
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#B45309';
+    ctx.font = 'bold 20px sans-serif';
+    ctx.fillText('DATE OF ISSUE', 140, 930);
+
+    ctx.fillStyle = '#0F172A';
+    ctx.font = 'bold 25px sans-serif';
+    ctx.fillText(formattedDate, 140, 970);
+
+    // Official Seal (Center)
+    ctx.textAlign = 'center';
+    ctx.beginPath();
+    ctx.arc(canvas.width / 2, 945, 65, 0, Math.PI * 2);
+    ctx.fillStyle = '#F59E0B';
+    ctx.fill();
+    ctx.strokeStyle = '#B45309';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+
+    ctx.fillStyle = '#451A03';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText('OFFICIAL SEAL', canvas.width / 2, 940);
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('TN HAPPY KIDS 2026', canvas.width / 2, 965);
+
+    // Authorized Signature (Right)
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#78350F';
+    ctx.font = 'italic bold 28px Georgia, serif';
+    ctx.fillText('TN Happy Kids Mgmt', canvas.width - 140, 935);
+
+    ctx.strokeStyle = '#78350F';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(canvas.width - 360, 952);
+    ctx.lineTo(canvas.width - 140, 952);
+    ctx.stroke();
+
+    ctx.fillStyle = '#B45309';
+    ctx.font = 'bold 20px sans-serif';
+    ctx.fillText('AUTHORIZED SIGNATURE', canvas.width - 140, 985);
+
+    return canvas.toDataURL('image/png');
   };
 
-  // Function to generate base64 image or download image
+  // Clear localStorage helper
+  const clearCompetitionLocalStorage = () => {
+    localStorage.removeItem('registrationData');
+    localStorage.removeItem('userRegistration');
+    localStorage.removeItem('drawingUpload');
+    localStorage.removeItem('dotActivity');
+    localStorage.clear();
+  };
+
+  // Function to download Certificate as Image (PNG)
   const handleDownloadImage = async () => {
     try {
       setStatusMsg(null);
-      const canvas = await getCertificateCanvas();
-      if (!canvas) throw new Error('Canvas rendering failed');
+      const imagePNG = await generateCertificateImagePNG();
 
-      const image = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.href = image;
+      link.href = imagePNG;
       link.download = `${childName.replace(/\s+/g, '_')}_Vinayagar_Drawing_Certificate.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
-      setStatusMsg({ type: 'success', text: 'Certificate image downloaded successfully! 🎨' });
+      // Clear local storage after download
+      clearCompetitionLocalStorage();
+
+      setStatusMsg({
+        type: 'success',
+        text: 'Certificate image downloaded successfully & saved local data cleared! 🎨',
+      });
     } catch (err) {
-      console.error('Error generating image:', err);
+      console.error('Error generating certificate image:', err);
       setStatusMsg({ type: 'error', text: 'Failed to download certificate image: ' + err.message });
     }
   };
 
-  // Function to download PDF
-  const handleDownloadPDF = async () => {
-    try {
-      setStatusMsg(null);
-      const canvas = await getCertificateCanvas();
-      if (!canvas) throw new Error('Canvas rendering failed');
-
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'a4',
-      });
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${childName.replace(/\s+/g, '_')}_Vinayagar_Drawing_Certificate.pdf`);
-
-      setStatusMsg({ type: 'success', text: 'Certificate PDF downloaded successfully! 📄' });
-    } catch (err) {
-      console.error('Error generating PDF:', err);
-      setStatusMsg({ type: 'error', text: 'Failed to download PDF: ' + err.message });
-    }
-  };
-
-  // Send email function calling Express backend API
+  // Function to send Certificate Image to Gmail
   const handleSendEmail = async (e) => {
     e.preventDefault();
     if (!emailInput || !emailInput.trim()) {
-      setStatusMsg({ type: 'error', text: 'Please enter a valid Gmail / Email address.' });
+      setStatusMsg({ type: 'error', text: 'Please enter a valid Gmail address.' });
       return;
     }
 
@@ -106,8 +217,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
     setStatusMsg(null);
 
     try {
-      const canvas = await getCertificateCanvas();
-      const certificateBase64 = canvas ? canvas.toDataURL('image/png') : null;
+      const certificateBase64 = await generateCertificateImagePNG();
 
       const response = await fetch('/api/send-certificate', {
         method: 'POST',
@@ -125,11 +235,17 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        setStatusMsg({ type: 'success', text: result.message || `E-Certificate sent to ${emailInput}! 📧` });
+        // Clear local storage after successfully sending email
+        clearCompetitionLocalStorage();
+
+        setStatusMsg({
+          type: 'success',
+          text: result.message || `E-Certificate image sent to ${emailInput} & local storage cleared! 📧`,
+        });
       } else {
         setStatusMsg({
           type: 'error',
-          text: result.message || 'Error sending email. Please verify credentials.',
+          text: result.message || 'Error sending email to Gmail.',
         });
       }
     } catch (err) {
@@ -186,24 +302,18 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
             </div>
           )}
 
-          {/* SCROLLABLE CERTIFICATE DISPLAY CONTAINER */}
+          {/* E-CERTIFICATE DISPLAY CONTAINER */}
           <div className="w-full overflow-x-auto p-1 bg-stone-950/80 rounded-2xl mb-5 shadow-inner">
-            
-            {/* THE E-CERTIFICATE TEMPLATE TARGET FOR HTML2CANVAS */}
-            <div
-              ref={certificateRef}
-              className="w-[800px] h-[565px] mx-auto bg-[#FFFDF5] text-stone-900 p-8 relative flex flex-col justify-between border-[12px] border-amber-600 shadow-2xl select-none"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
+            <div className="w-[800px] h-[565px] mx-auto bg-[#FFFDF5] text-stone-900 p-8 relative flex flex-col justify-between border-[12px] border-amber-600 shadow-2xl select-none">
               {/* Inner Double Gold Border */}
               <div className="absolute inset-2 border-2 border-amber-400/80 pointer-events-none" />
-              <div className="absolute inset-4 border border-amber-300/50 pointer-events-none" opacity="0.6" />
+              <div className="absolute inset-4 border border-amber-300/50 pointer-events-none" />
 
               {/* CERTIFICATE HEADER */}
               <div className="text-center pt-2 relative z-10">
                 <div className="flex justify-center items-center gap-3 mb-2">
                   <img
-                    src="/assets/images/logo.png"
+                    src={logoImg}
                     alt="TN Happy Kids Logo"
                     className="h-14 w-auto object-contain bg-white px-2 py-1 rounded-lg border border-amber-200 shadow-sm"
                   />
@@ -213,7 +323,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
                 </h4>
                 <h1
                   className="text-3xl font-extrabold text-orange-600 tracking-wide mt-1 uppercase drop-shadow-sm"
-                  style={{ fontFamily: "'Playfair Display', serif, Georgia" }}
+                  style={{ fontFamily: "'Georgia', serif" }}
                 >
                   Certificate of Completion
                 </h1>
@@ -228,10 +338,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
                   This is proudly presented to
                 </p>
                 <div className="inline-block border-b-2 border-amber-500 px-8 py-1 my-1">
-                  <h2
-                    className="text-3xl sm:text-4xl font-extrabold text-amber-950 font-heading"
-                    style={{ fontFamily: "'Georgia', serif" }}
-                  >
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-amber-950 font-heading">
                     {childName}
                   </h2>
                 </div>
@@ -244,9 +351,8 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
                 </p>
               </div>
 
-              {/* CERTIFICATE FOOTER WITH SIGNATURES & OFFICIAL GOLD STAMP */}
+              {/* CERTIFICATE FOOTER */}
               <div className="flex items-end justify-between px-6 pb-2 relative z-10 border-t border-amber-200/80 pt-4">
-                
                 {/* Date Left */}
                 <div className="text-left">
                   <p className="text-[10px] uppercase tracking-wider font-extrabold text-amber-800">
@@ -286,22 +392,14 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
 
           {/* ACTION BUTTONS & GMAIL SEND FORM */}
           <div className="bg-stone-950 p-4 rounded-2xl border border-stone-800 flex flex-col md:flex-row gap-4 items-center justify-between">
-            
-            {/* Quick Download Buttons */}
-            <div className="flex items-center gap-2.5 w-full md:w-auto">
+            {/* Download Image Button */}
+            <div className="w-full md:w-auto">
               <button
                 onClick={handleDownloadImage}
-                className="flex-1 md:flex-none px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full md:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Download className="w-4 h-4" />
-                <span>Download Image</span>
-              </button>
-              <button
-                onClick={handleDownloadPDF}
-                className="flex-1 md:flex-none px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download PDF</span>
+                <span>Download Certificate Image (PNG)</span>
               </button>
             </div>
 
@@ -313,14 +411,14 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
                   type="email"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  placeholder="Enter Gmail / Email address"
-                  className="w-full pl-9 pr-3 py-2 bg-stone-900 border border-stone-700 rounded-xl text-xs text-white placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                  placeholder="Enter Gmail address"
+                  className="w-full pl-9 pr-3 py-2.5 bg-stone-900 border border-stone-700 rounded-xl text-xs text-white placeholder-stone-400 focus:outline-none focus:border-amber-400"
                 />
               </div>
               <button
                 type="submit"
                 disabled={isSending}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
               >
                 {isSending ? (
                   <>
@@ -330,7 +428,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Send Certificate</span>
+                    <span>Send Image to Gmail</span>
                   </>
                 )}
               </button>

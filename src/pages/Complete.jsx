@@ -124,7 +124,7 @@ export const Complete = () => {
           <div className="mb-6 p-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl text-white shadow-lg border-2 border-yellow-300 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left">
               <span className="text-xs font-black uppercase tracking-wider text-yellow-200 block">
-                ✨ Official E-Certificate Ready ✨
+                ✨ Official E-Certificate Ready
               </span>
               <p className="text-xs sm:text-sm font-bold text-amber-50 mt-0.5">
                 Download your child's Drawing Competition Completion Certificate or send to Gmail!

@@ -113,9 +113,7 @@ export const IntroAnimation = ({ onComplete }) => {
             transition={{ delay: 3.2, duration: 0.7 }}
             className="mb-6"
           >
-            <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-amber-300">
-              Aged 3 – 5 Years
-            </span>
+
             <h1 className="text-2xl sm:text-4xl font-extrabold text-amber-900 leading-tight">
               Vinayagar Chaturthi <br />
               <span className="text-orange-600">Kids Drawing Competition</span>
