@@ -10,56 +10,75 @@ export const DotActivity = ({ onComplete }) => {
 
   // 50 Dots forming the outer silhouette contour of Lord Vinayagar
   const dots = [
-    { id: 1, x: 300, y: 55, label: '1' },
-    { id: 2, x: 325, y: 65, label: '2' },
-    { id: 3, x: 352, y: 80, label: '3' },
-    { id: 4, x: 375, y: 102, label: '4' },
-    { id: 5, x: 440, y: 135, label: '5' },
-    { id: 6, x: 395, y: 220, label: '6' },
-    { id: 7, x: 382, y: 260, label: '7' },
-    { id: 8, x: 425, y: 205, label: '8' },
-    { id: 9, x: 442, y: 240, label: '9' },
-    { id: 10, x: 380, y: 345, label: '10' },
-    { id: 11, x: 388, y: 375, label: '11' },
-    { id: 12, x: 168, y: 325, label: '12' },
-    { id: 13, x: 198, y: 295, label: '13' },
-    { id: 14, x: 405, y: 295, label: '14' },
-    { id: 15, x: 445, y: 365, label: '15' },
-    { id: 16, x: 442, y: 400, label: '16' },
-    { id: 17, x: 432, y: 430, label: '17' },
-    { id: 18, x: 445, y: 450, label: '18' },
-    { id: 19, x: 155, y: 450, label: '19' },
-    { id: 20, x: 425, y: 480, label: '20' },
-    { id: 21, x: 365, y: 485, label: '21' },
-    { id: 22, x: 300, y: 485, label: '22' },
-    { id: 23, x: 235, y: 485, label: '23' },
-    { id: 24, x: 175, y: 480, label: '24' },
-    { id: 25, x: 215, y: 430, label: '25' },
-    { id: 26, x: 158, y: 400, label: '26' },
-    { id: 27, x: 165, y: 365, label: '27' },
-    { id: 28, x: 170, y: 345, label: '28' },
-    { id: 29, x: 138, y: 340, label: '29' },
-    { id: 30, x: 490, y: 260, label: '30' },
-    { id: 31, x: 110, y: 260, label: '31' },
-    { id: 32, x: 222, y: 220, label: '32' },
-    { id: 33, x: 172, y: 275, label: '33' },
-    { id: 34, x: 165, y: 210, label: '34' },
-    { id: 35, x: 158, y: 175, label: '35' },
-    { id: 36, x: 150, y: 140, label: '36' },
-    { id: 37, x: 225, y: 102, label: '37' },
-    { id: 38, x: 202, y: 125, label: '38' },
-    { id: 39, x: 232, y: 88, label: '39' },
-    { id: 40, x: 248, y: 75, label: '40' },
-    { id: 41, x: 268, y: 65, label: '41' },
-    { id: 42, x: 285, y: 58, label: '42' },
-    { id: 43, x: 415, y: 120, label: '43' },
-    { id: 44, x: 385, y: 190, label: '44' },
-    { id: 45, x: 348, y: 85, label: '45' },
-    { id: 46, x: 328, y: 75, label: '46' },
-    { id: 47, x: 315, y: 68, label: '47' },
-    { id: 48, x: 305, y: 64, label: '48' },
-    { id: 49, x: 410, y: 130, label: '49' },
-    { id: 50, x: 298, y: 50, label: '50' },
+    // Crown (Mukut) Top & Upper Curve
+    { id: 1, x: 300, y: 172, label: '1' },
+    { id: 2, x: 320, y: 182, label: '2' },
+    { id: 3, x: 340, y: 200, label: '3' },
+    { id: 4, x: 358, y: 222, label: '4' },
+    { id: 5, x: 338, y: 236, label: '5' },
+    { id: 6, x: 318, y: 242, label: '6' },
+    { id: 7, x: 298, y: 242, label: '7' },
+    { id: 8, x: 278, y: 236, label: '8' },
+
+    // Right Ear & Right Side Head
+    { id: 9, x: 362, y: 254, label: '9' },
+    { id: 10, x: 395, y: 250, label: '10' },
+    { id: 11, x: 426, y: 262, label: '11' },
+    { id: 12, x: 440, y: 288, label: '12' },
+    { id: 13, x: 428, y: 325, label: '13' },
+    { id: 14, x: 395, y: 348, label: '14' },
+    { id: 15, x: 370, y: 346, label: '15' },
+
+    // Right Arm & Hand (Holding Modak)
+    { id: 16, x: 412, y: 318, label: '16' },
+    { id: 17, x: 442, y: 328, label: '17' },
+    { id: 18, x: 462, y: 345, label: '18' },
+    { id: 19, x: 448, y: 375, label: '19' },
+    { id: 20, x: 428, y: 400, label: '20' },
+    { id: 21, x: 405, y: 435, label: '21' },
+
+    // Right Knee & Body
+    { id: 22, x: 385, y: 475, label: '22' },
+    { id: 23, x: 425, y: 505, label: '23' },
+    { id: 24, x: 432, y: 538, label: '24' },
+    { id: 25, x: 395, y: 565, label: '25' },
+
+    // Bottom Lotus Base
+    { id: 26, x: 360, y: 578, label: '26' },
+    { id: 27, x: 320, y: 585, label: '27' },
+    { id: 28, x: 280, y: 585, label: '28' },
+    { id: 29, x: 240, y: 578, label: '29' },
+
+    // Left Foot & Knee
+    { id: 30, x: 205, y: 565, label: '30' },
+    { id: 31, x: 168, y: 538, label: '31' },
+    { id: 32, x: 175, y: 505, label: '32' },
+    { id: 33, x: 215, y: 475, label: '33' },
+
+    // Left Hand & Arm (Blessing Hand)
+    { id: 34, x: 195, y: 435, label: '34' },
+    { id: 35, x: 172, y: 400, label: '35' },
+    { id: 36, x: 152, y: 375, label: '36' },
+
+    // Left Upper Arm & Hand (Holding Axe)
+    { id: 37, x: 138, y: 345, label: '37' },
+    { id: 38, x: 158, y: 328, label: '38' },
+    { id: 39, x: 188, y: 318, label: '39' },
+
+    // Left Ear & Left Side Head
+    { id: 40, x: 230, y: 346, label: '40' },
+    { id: 41, x: 205, y: 348, label: '41' },
+    { id: 42, x: 172, y: 325, label: '42' },
+    { id: 43, x: 160, y: 288, label: '43' },
+    { id: 44, x: 174, y: 262, label: '44' },
+    { id: 45, x: 205, y: 250, label: '45' },
+    { id: 46, x: 238, y: 254, label: '46' },
+
+    // Left Crown & Top Peak
+    { id: 47, x: 242, y: 222, label: '47' },
+    { id: 48, x: 260, y: 200, label: '48' },
+    { id: 49, x: 280, y: 182, label: '49' },
+    { id: 50, x: 300, y: 172, label: '50' },
   ];
 
   // Handle tapping a dot
@@ -154,18 +173,18 @@ export const DotActivity = ({ onComplete }) => {
         </div>
 
         {/* 2-Layer Interactive Canvas: Layer 1 Clean Background Image + Layer 2 Interactive SVG Dots */}
-        <div className="relative w-full max-w-[550px] aspect-[550/540] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
+        <div className="relative w-full max-w-[550px] aspect-[600/650] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
           
-          {/* LAYER 1: Clean Vinayagar Line Art Background Image (No dots, clean image) */}
+          {/* LAYER 1: Clean Vinayagar Line Art Background Image (User uploaded image) */}
           <img
             src="/assets/images/vinayagar_clean.png"
             alt="Vinayagar Line Art Base"
-            className="absolute inset-0 w-full h-full object-contain p-4 pointer-events-none select-none z-0"
+            className="absolute inset-0 w-full h-full object-contain p-2 pointer-events-none select-none z-0"
           />
 
           {/* LAYER 2: Interactive SVG Overlay for Connected Lines & Interactive Dots */}
           <svg
-            viewBox="0 0 600 550"
+            viewBox="0 0 600 650"
             className="w-full h-full select-none relative z-10"
             style={{ touchAction: 'manipulation' }}
           >
