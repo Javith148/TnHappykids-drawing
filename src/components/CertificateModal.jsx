@@ -218,19 +218,39 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
 
     try {
       const certificateBase64 = await generateCertificateImagePNG();
+      const payload = {
+        recipientEmail: emailInput.trim(),
+        childName,
+        childAge,
+        parentName,
+        completionDate: formattedDate,
+        certificateBase64,
+      };
 
-      const response = await fetch('/api/send-certificate', {
+      let response = await fetch('/api/send-certificate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          recipientEmail: emailInput.trim(),
-          childName,
-          childAge,
-          parentName,
-          completionDate: formattedDate,
-          certificateBase64,
-        }),
+        body: JSON.stringify(payload),
       });
+
+      // If relative endpoint returns non-JSON (e.g. 404 HTML), try falling back to port 5000
+      let contentType = response.headers.get('content-type');
+      if (!response.ok || !contentType || !contentType.includes('application/json')) {
+        try {
+          response = await fetch('http://localhost:5000/api/send-certificate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          contentType = response.headers.get('content-type');
+        } catch (fallbackErr) {
+          console.log('Port 5000 fallback connection error:', fallbackErr);
+        }
+      }
+
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned invalid response. Please ensure email server is active.');
+      }
 
       const result = await response.json();
 

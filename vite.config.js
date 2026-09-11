@@ -8,7 +8,7 @@ const emailSmtpPlugin = () => ({
   name: 'email-smtp-plugin',
   configureServer(server) {
     server.middlewares.use((req, res, next) => {
-      if (req.url === '/api/send-certificate' && req.method === 'POST') {
+      if (req.url && req.url.startsWith('/api/send-certificate') && req.method === 'POST') {
         let body = '';
         req.on('data', (chunk) => {
           body += chunk;
@@ -51,7 +51,7 @@ const emailSmtpPlugin = () => ({
                       We are delighted to send you the official <strong>E-Certificate of Completion</strong> for <strong>${childName || 'Child'}</strong> (Age: ${childAge || 'Up to 5'} years) for successfully completing the <strong>TN Happy Kids Vinayagar Chaturthi State Level Drawing Competition 2026</strong> on <strong>${completionDate || new Date().toLocaleDateString()}</strong>.
                     </p>
                     <p style="font-size: 15px; line-height: 1.6; color: #334155;">
-                      The official E-Certificate is attached below to this email as an image/file.
+                      The official E-Certificate photo is attached below to this email!
                     </p>
                   </div>
 
@@ -80,7 +80,7 @@ const emailSmtpPlugin = () => ({
             return res.end(
               JSON.stringify({
                 success: true,
-                message: `E-Certificate successfully sent to ${recipientEmail}!`,
+                message: `E-Certificate image successfully sent to ${recipientEmail}!`,
               })
             );
           } catch (err) {
@@ -105,4 +105,13 @@ const emailSmtpPlugin = () => ({
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), emailSmtpPlugin()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });
