@@ -149,7 +149,7 @@ export const Footer = () => {
             {/* Contact Us Sub-block */}
             <div className="mt-8 pt-6 border-t border-amber-900/80">
               <h4 className="font-heading text-base font-bold text-amber-300 mb-3 flex items-center gap-2">
-                <PhoneCall className="w-4 h-4 text-yellow-400" />
+
                 <span>Contact Us</span>
               </h4>
               <ul className="space-y-2.5 text-xs sm:text-sm text-amber-200/90 font-medium">

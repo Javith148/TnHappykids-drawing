@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Baby, Phone, Mail, Sparkles, ArrowRight, AlertCircle } from 'lucide-react';
+import { User, Baby, Phone, Mail, Sparkles, ArrowRight, AlertCircle, Calendar } from 'lucide-react';
 import { FestiveBackground } from '../components/FestiveBackground';
 import { ProgressStepper } from '../components/ProgressStepper';
 import { CustomModal } from '../components/CustomModal';
@@ -16,6 +16,7 @@ export const Register = () => {
 
   const [formData, setFormData] = useState({
     childName: data.childName || '',
+    childDob: data.childDob || '',
     childAge: data.childAge || '',
     parentName: data.parentName || '',
     parentPhone: data.parentPhone || '',
@@ -25,11 +26,32 @@ export const Register = () => {
   const [errors, setErrors] = useState({});
   const [isAgeModalOpen, setIsAgeModalOpen] = useState(false);
 
+  const calculateAge = (dobString) => {
+    if (!dobString) return '';
+    const birthDate = new Date(dobString);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age >= 0 ? age : 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+    if (name === 'childDob') {
+      const calculatedAge = calculateAge(value);
+      setFormData((prev) => ({
+        ...prev,
+        childDob: value,
+        childAge: calculatedAge ? String(calculatedAge) : prev.childAge,
+      }));
+      if (errors.childDob) setErrors((prev) => ({ ...prev, childDob: '' }));
+      if (errors.childAge) setErrors((prev) => ({ ...prev, childAge: '' }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -169,6 +191,28 @@ export const Register = () => {
                 <p className="text-xs text-rose-600 font-semibold mt-1 flex items-center gap-1">
                   <AlertCircle className="w-3.5 h-3.5" />
                   <span>{errors.childName}</span>
+                </p>
+              )}
+            </div>
+
+            {/* Child Date of Birth */}
+            <div>
+              <label className="block text-xs sm:text-sm font-bold text-amber-950 mb-1 flex items-center gap-1.5">
+                <Calendar className="w-4 h-4 text-orange-500" />
+                <span>{t('childDob')} *</span>
+              </label>
+              <input
+                type="date"
+                name="childDob"
+                value={formData.childDob}
+                onChange={handleChange}
+                className={`w-full px-4 py-2.5 sm:py-3 bg-amber-50/60 rounded-xl border-2 text-xs sm:text-sm text-amber-950 placeholder-amber-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-200 transition-all ${errors.childDob ? 'border-rose-500' : 'border-amber-300/80 focus:border-orange-500'
+                  }`}
+              />
+              {errors.childDob && (
+                <p className="text-xs text-rose-600 font-semibold mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{errors.childDob}</span>
                 </p>
               )}
             </div>

@@ -6,6 +6,7 @@ const LOCAL_STORAGE_KEY = 'tn_happy_kids_chaturthi_state';
 
 const initialData = {
   childName: '',
+  childDob: '',
   childAge: '',
   parentName: '',
   parentPhone: '',

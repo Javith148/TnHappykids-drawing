@@ -5,12 +5,16 @@ export const validateRegistrationForm = (formData) => {
     errors.childName = 'Please enter your child\'s name';
   }
 
+  if (!formData.childDob || !formData.childDob.trim()) {
+    errors.childDob = 'Please select child\'s date of birth';
+  }
+
   if (!formData.childAge || formData.childAge === '') {
     errors.childAge = 'Please enter child\'s age';
   } else {
     const age = parseInt(formData.childAge, 10);
-    if (isNaN(age)) {
-      errors.childAge = 'Please enter a valid number';
+    if (isNaN(age) || age < 1) {
+      errors.childAge = 'Please enter a valid age';
     }
   }
 
@@ -21,7 +25,6 @@ export const validateRegistrationForm = (formData) => {
   if (!formData.parentPhone || !formData.parentPhone.trim()) {
     errors.parentPhone = 'Please enter mobile number';
   } else {
-    const phoneRegex = /^[6-9]\d{9}$/;
     const cleanPhone = formData.parentPhone.replace(/\D/g, '');
     if (cleanPhone.length < 10) {
       errors.parentPhone = 'Please enter a valid 10-digit mobile number';
@@ -45,5 +48,5 @@ export const validateRegistrationForm = (formData) => {
 
 export const isAgeEligible = (age) => {
   const numAge = parseInt(age, 10);
-  return numAge >= 3 && numAge <= 5;
+  return !isNaN(numAge) && numAge <= 5;
 };

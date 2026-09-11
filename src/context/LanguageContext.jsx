@@ -43,8 +43,8 @@ export const translations = {
 
     // Contest Details Card
     contestRulesHeading: "Competition Guidelines & Eligibility",
-    rule1Title: "Age Limit (3 to 5 Years)",
-    rule1Desc: "Strictly designed for children aged 3 to 5 years old.",
+    rule1Title: "Age Limit (Up to 5 Years)",
+    rule1Desc: "Strictly designed for children aged up to 5 years old.",
     rule2Title: "Drawing Topic",
     rule2Desc: "Draw Lord Vinayagar in your own creative art style.",
     rule3Title: "Activity Video",
@@ -70,8 +70,10 @@ export const translations = {
     parentNamePlaceholder: "Enter parent full name",
     childName: "Child's Name",
     childNamePlaceholder: "Enter child full name",
+    childDob: "Child's Date of Birth",
+    childDobPlaceholder: "Select Date of Birth",
     childAge: "Child's Age (Years)",
-    childAgePlaceholder: "Age must below 5 years",
+    childAgePlaceholder: "Age (Up to 5 years)",
     whatsappNumber: "WhatsApp Phone Number",
     whatsappNumberPlaceholder: "10-digit WhatsApp number",
     branchLocation: "Nearest Branch Location",
@@ -79,8 +81,8 @@ export const translations = {
     continueToUpload: "Continue to Upload Drawing",
 
     // Age Notice Modal
-    ageModalTitle: "Eligible Age Notice",
-    ageModalMessage: "This competition is exclusively designed for children aged 3 to 5 years. Children below 3 years or above 5 years are not eligible for this competition.",
+    ageModalTitle: "Eligible Age Notice (Up to 5 Years)",
+    ageModalMessage: "This competition is exclusively designed for young children aged up to 5 years. Children above 5 years of age are not eligible for this competition.",
     closeModal: "Understand & Close",
 
     // Upload Page
@@ -181,8 +183,8 @@ export const translations = {
 
     // Contest Details Card
     contestRulesHeading: "போட்டி விதிமுறைகள் & தகுதிகள்",
-    rule1Title: "வயது வரம்பு (3 முதல் 5 வயது)",
-    rule1Desc: "3 முதல் 5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே வடிவமைக்கப்பட்டுள்ளது.",
+    rule1Title: "வயது வரம்பு (5 வயது வரை)",
+    rule1Desc: "5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே வடிவமைக்கப்பட்டுள்ளது.",
     rule2Title: "ஓவிய தலைப்பு",
     rule2Desc: "உங்களின் சொந்த படைப்பாற்றலில் ஸ்ரீ விநாயகரை வரையவும்.",
     rule3Title: "செயல்பாட்டு வீடியோ",
@@ -208,8 +210,10 @@ export const translations = {
     parentNamePlaceholder: "பெற்றோரின் முழு பெயர் உள்ளிடவும்",
     childName: "குழந்தையின் பெயர்",
     childNamePlaceholder: "குழந்தையின் முழு பெயர் உள்ளிடவும்",
+    childDob: "குழந்தையின் பிறந்த தேதி",
+    childDobPlaceholder: "பிறந்த தேதியைத் தேர்ந்தெடுக்கவும்",
     childAge: "குழந்தையின் வயது",
-    childAgePlaceholder: "வயது (3 முதல் 5 மட்டுமே)",
+    childAgePlaceholder: "வயது (5 வயது வரை)",
     whatsappNumber: "வாட்ஸ்அப் தொலைபேசி எண்",
     whatsappNumberPlaceholder: "10-இலக்க வாட்ஸ்அப் எண்",
     branchLocation: "அருகிலுள்ள கிளை மையம்",
@@ -217,8 +221,8 @@ export const translations = {
     continueToUpload: "ஓவியம் அப்லோட் செய்ய தொடரவும்",
 
     // Age Notice Modal
-    ageModalTitle: "வயது தகுதி அறிவிப்பு",
-    ageModalMessage: "இப்போட்டி 3 முதல் 5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது. 3 வயதிற்கு உட்பட்டோர் அல்லது 5 வயதிற்கு மேற்பட்ட குழந்தைகள் இப்போட்டியில் பங்கேற்க முடியாது.",
+    ageModalTitle: "வயது தகுதி அறிவிப்பு (5 வயது வரை)",
+    ageModalMessage: "இப்போட்டி 5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது. 5 வயதிற்கு மேற்பட்ட குழந்தைகள் இப்போட்டியில் பங்கேற்க முடியாது.",
     closeModal: "புரிந்துகொண்டேன்",
 
     // Upload Page
