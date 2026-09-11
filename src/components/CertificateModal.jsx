@@ -20,48 +20,65 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
   const childAge = data.childAge ? `${data.childAge} Years` : 'Up to 5 Years';
   const parentName = data.parentName || 'Parent / Guardian';
 
+  // Helper to capture certificate element as canvas
+  const getCertificateCanvas = async () => {
+    if (!certificateRef.current) return null;
+    return await html2canvas(certificateRef.current, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      backgroundColor: '#FFFDF5',
+      windowWidth: 1024,
+    });
+  };
+
   // Function to generate base64 image or download image
   const handleDownloadImage = async () => {
-    if (!certificateRef.current) return;
     try {
-      const canvas = await html2canvas(certificateRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#FFFDF5',
-      });
+      setStatusMsg(null);
+      const canvas = await getCertificateCanvas();
+      if (!canvas) throw new Error('Canvas rendering failed');
+
       const image = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.href = image;
       link.download = `${childName.replace(/\s+/g, '_')}_Vinayagar_Drawing_Certificate.png`;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
+
       setStatusMsg({ type: 'success', text: 'Certificate image downloaded successfully! 🎨' });
     } catch (err) {
       console.error('Error generating image:', err);
-      setStatusMsg({ type: 'error', text: 'Failed to download certificate image.' });
+      setStatusMsg({ type: 'error', text: 'Failed to download certificate image: ' + err.message });
     }
   };
 
   // Function to download PDF
   const handleDownloadPDF = async () => {
-    if (!certificateRef.current) return;
     try {
-      const canvas = await html2canvas(certificateRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#FFFDF5',
-      });
+      setStatusMsg(null);
+      const canvas = await getCertificateCanvas();
+      if (!canvas) throw new Error('Canvas rendering failed');
+
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('landscape', 'mm', 'a4');
-      const imgProps = pdf.getImageProperties(imgData);
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4',
+      });
+
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${childName.replace(/\s+/g, '_')}_Vinayagar_Drawing_Certificate.pdf`);
+
       setStatusMsg({ type: 'success', text: 'Certificate PDF downloaded successfully! 📄' });
     } catch (err) {
       console.error('Error generating PDF:', err);
-      setStatusMsg({ type: 'error', text: 'Failed to download PDF.' });
+      setStatusMsg({ type: 'error', text: 'Failed to download PDF: ' + err.message });
     }
   };
 
@@ -77,13 +94,8 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
     setStatusMsg(null);
 
     try {
-      // Capture certificate as base64 image string
-      const canvas = await html2canvas(certificateRef.current, {
-        scale: 1.5,
-        useCORS: true,
-        backgroundColor: '#FFFDF5',
-      });
-      const certificateBase64 = canvas.toDataURL('image/png');
+      const canvas = await getCertificateCanvas();
+      const certificateBase64 = canvas ? canvas.toDataURL('image/png') : null;
 
       const response = await fetch('http://localhost:5000/api/send-certificate', {
         method: 'POST',
@@ -105,7 +117,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
       } else {
         setStatusMsg({
           type: 'error',
-          text: result.message || 'Server error while sending email. Make sure server/.env credentials are set.',
+          text: result.message || 'Server error while sending email. Please check server/.env settings.',
         });
       }
     } catch (err) {
@@ -173,13 +185,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
             >
               {/* Inner Double Gold Border */}
               <div className="absolute inset-2 border-2 border-amber-400/80 pointer-events-none" />
-              <div className="absolute inset-4 border border-amber-300/50 pointer-events-none" />
-
-              {/* Four Corner Decorative Jewels */}
-              <div className="absolute top-5 left-5 text-amber-500 text-xl font-bold">✨</div>
-              <div className="absolute top-5 right-5 text-amber-500 text-xl font-bold">✨</div>
-              <div className="absolute bottom-5 left-5 text-amber-500 text-xl font-bold">✨</div>
-              <div className="absolute bottom-5 right-5 text-amber-500 text-xl font-bold">✨</div>
+              <div className="absolute inset-4 border border-amber-300/50 pointer-events-none" opacity="0.6" />
 
               {/* CERTIFICATE HEADER */}
               <div className="text-center pt-2 relative z-10">
