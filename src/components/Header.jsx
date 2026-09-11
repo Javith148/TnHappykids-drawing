@@ -3,12 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sparkles, HelpCircle, Home as HomeIcon, Globe, ChevronDown, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { RegisterInstructionModal } from './RegisterInstructionModal';
 import logoImg from '../assets/images/logo.png';
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [instructionModalOpen, setInstructionModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
@@ -138,15 +140,20 @@ export const Header = () => {
           </div>
 
           {!hideRegisterBtn && (
-            <Link
-              to="/register"
+            <button
+              onClick={() => setInstructionModalOpen(true)}
               className="relative group px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full font-bold text-sm shadow-md hover:shadow-orange-500/30 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-amber-300"
             >
               <Sparkles className="w-4 h-4 text-yellow-200 animate-pulse" />
               <span>{t('registerNow')}</span>
-            </Link>
+            </button>
           )}
         </div>
+
+        <RegisterInstructionModal
+          isOpen={instructionModalOpen}
+          onClose={() => setInstructionModalOpen(false)}
+        />
 
         {/* Mobile Hamburger Button */}
         <div className="flex items-center md:hidden">

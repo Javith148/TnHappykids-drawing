@@ -30,6 +30,18 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
       logging: false,
       backgroundColor: '#FFFDF5',
       windowWidth: 1024,
+      onclone: (clonedDoc) => {
+        const allNodes = clonedDoc.querySelectorAll('*');
+        allNodes.forEach((node) => {
+          const style = window.getComputedStyle(node);
+          ['color', 'backgroundColor', 'borderColor', 'outlineColor'].forEach((attr) => {
+            const val = style.getPropertyValue(attr);
+            if (val && val.includes('oklch')) {
+              node.style.setProperty(attr, attr.includes('background') ? '#FFFDF5' : '#1E293B', 'important');
+            }
+          });
+        });
+      },
     });
   };
 
