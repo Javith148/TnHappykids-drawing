@@ -148,21 +148,7 @@ export const DotActivity = ({ onComplete }) => {
           ))}
         </div>
 
-        {/* Title Header Section */}
-        <div className="text-center mb-3">
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-wide text-orange-600 drop-shadow-sm font-heading flex items-center justify-center gap-2">
-            <span>விநாயகர்-ஐ Connect பண்ணுங்க!</span>
-          </h1>
-          <h2 className="text-lg sm:text-2xl font-bold text-sky-600 mt-0.5">
-            Vinayagar - Connect the Dots!
-          </h2>
 
-          {/* Instruction Green Pill */}
-          <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-full text-[11px] sm:text-xs font-bold shadow-sm">
-            <span className="text-amber-600">⭐</span>
-            <span>Connect the dots from 1 to 50 to complete Lord Ganesha! &bull; For Kids Age 3–5 &bull; Join dots in order! ✏️</span>
-          </div>
-        </div>
 
         {/* Interactive SVG Canvas with Embedded Image for 1:1 Pixel Lock */}
         <div className="relative w-full max-w-[550px] aspect-[820/1024] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
@@ -307,23 +293,7 @@ export const DotActivity = ({ onComplete }) => {
           </div>
         </div>
 
-        {/* Bottom WhatsApp Reward Banner (Exact matching user worksheet) */}
-        <div className="mt-4 w-full bg-gradient-to-r from-cyan-50 via-teal-50 to-cyan-50 border-2 border-teal-400/80 rounded-2xl p-3 text-center shadow-md relative overflow-hidden">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
-              <Award className="w-5 h-5" />
-            </div>
-            <p className="text-xs sm:text-sm font-extrabold text-teal-950">
-              இந்த புகைப்படத்தை <span className="text-emerald-700 underline text-sm sm:text-base font-black">95149 00070</span> என்ற எண்ணுக்கு WhatsApp-ல் பகிர்ந்து <span className="text-orange-600">வெள்ளி விநாயகர் சிலை பரிசு பெறுங்கள்!</span>
-            </p>
-          </div>
-          <p className="text-[11px] sm:text-xs text-teal-900 font-semibold">
-            Share this photo to <span className="font-bold text-emerald-800">95149 00070</span> via WhatsApp to Get <span className="font-bold text-orange-600">Silver Vinayagar Idol as Gift!</span>
-          </p>
-          <p className="text-[9px] text-teal-700/80 font-bold mt-1 uppercase tracking-wider">
-            &bull; TN HAPPY KIDS.IN &bull; Branches: Pollachi | Coimbatore-Saibabacolony | Edayarpalayam | Erode | Tiruppur | Kolathur | Thambaram | Dharmapuri | Bangalore
-          </p>
-        </div>
+
 
         {/* Bottom Pencil Border Bar */}
         <div className="w-full flex justify-between items-center mt-3 px-1 sm:px-3 overflow-hidden gap-1">
