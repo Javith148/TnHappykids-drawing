@@ -71,7 +71,7 @@ export const translations = {
     childName: "Child's Name",
     childNamePlaceholder: "Enter child full name",
     childAge: "Child's Age (Years)",
-    childAgePlaceholder: "Age (Must be 3 to 5 years)",
+    childAgePlaceholder: "Age must below 5 years",
     whatsappNumber: "WhatsApp Phone Number",
     whatsappNumberPlaceholder: "10-digit WhatsApp number",
     branchLocation: "Nearest Branch Location",

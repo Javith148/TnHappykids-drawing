@@ -7,6 +7,7 @@ export const UploadCard = ({
   title,
   subtitle,
   acceptFormats,
+  accept,
   selectedFile,
   fileInfo,
   onFileSelect,
@@ -14,21 +15,54 @@ export const UploadCard = ({
 }) => {
   const inputRef = useRef(null);
 
+  const fileAccept = accept || (type === 'video' 
+    ? '.mp4,.webm,.mov,.avi,video/mp4,video/webm,video/quicktime,video/x-msvideo' 
+    : '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp');
+
+  const processFile = (file) => {
+    if (!file) return;
+
+    const fileName = file.name.toLowerCase();
+    const fileExt = fileName.substring(fileName.lastIndexOf('.'));
+
+    if (type === 'image') {
+      const validImageExts = ['.jpg', '.jpeg', '.png', '.webp'];
+      const isValidExt = validImageExts.includes(fileExt);
+      const isValidMime = file.type ? file.type.startsWith('image/') : true;
+
+      if (!isValidExt || !isValidMime) {
+        alert('Invalid Image Format! 🎨\n\nOnly JPG, JPEG, PNG, and WEBP image files are allowed.');
+        return;
+      }
+    } else if (type === 'video') {
+      const validVideoExts = ['.mp4', '.webm', '.mov', '.avi'];
+      const isValidExt = validVideoExts.includes(fileExt);
+      const isValidMime = file.type ? file.type.startsWith('video/') : true;
+
+      if (!isValidExt || !isValidMime) {
+        alert('Invalid Video Format! 🎥\n\nOnly MP4, WEBM, MOV, and AVI video files are allowed.');
+        return;
+      }
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const previewUrl = event.target.result;
+      const sizeFormatted = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      onFileSelect({
+        file,
+        previewUrl,
+        name: file.name,
+        size: sizeFormatted,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const previewUrl = event.target.result;
-        const sizeFormatted = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-        onFileSelect({
-          file,
-          previewUrl,
-          name: file.name,
-          size: sizeFormatted,
-        });
-      };
-      reader.readAsDataURL(file);
+      processFile(file);
     }
   };
 
@@ -36,18 +70,7 @@ export const UploadCard = ({
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const previewUrl = event.target.result;
-        const sizeFormatted = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-        onFileSelect({
-          file,
-          previewUrl,
-          name: file.name,
-          size: sizeFormatted,
-        });
-      };
-      reader.readAsDataURL(file);
+      processFile(file);
     }
   };
 
@@ -79,7 +102,7 @@ export const UploadCard = ({
           type="file"
           ref={inputRef}
           onChange={handleFileChange}
-          accept={acceptFormats}
+          accept={fileAccept}
           className="hidden"
         />
 

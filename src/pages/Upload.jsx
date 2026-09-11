@@ -125,7 +125,8 @@ export const Upload = () => {
             type="image"
             title={t('drawingTitle')}
             subtitle={t('drawingSubtitle')}
-            accept="image/*"
+            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            acceptFormats="JPG, JPEG, PNG, WEBP"
             selectedFile={drawingFile}
             fileInfo={drawingInfo}
             onFileSelect={handleDrawingSelect}
@@ -137,7 +138,8 @@ export const Upload = () => {
             type="video"
             title={t('videoTitle')}
             subtitle={t('videoSubtitle')}
-            accept="video/*"
+            accept=".mp4,.webm,.mov,.avi,video/mp4,video/webm,video/quicktime,video/x-msvideo"
+            acceptFormats="MP4, WEBM, MOV, AVI"
             selectedFile={videoFile}
             fileInfo={videoInfo}
             onFileSelect={handleVideoSelect}

@@ -51,53 +51,6 @@ export const IntroAnimation = ({ onComplete }) => {
           />
         </motion.div>
 
-        {/* 3. Banana leaf decorations sliding from top corners */}
-        <motion.img
-          src="/assets/images/banana_leaf.png"
-          alt="Banana Leaf Left"
-          initial={{ x: -150, y: -150, rotate: -45, opacity: 0 }}
-          animate={{ x: -30, y: -30, rotate: -20, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
-          className="absolute top-0 left-0 w-48 sm:w-64 pointer-events-none drop-shadow-md"
-        />
-        <motion.img
-          src="/assets/images/banana_leaf.png"
-          alt="Banana Leaf Right"
-          initial={{ x: 150, y: -150, rotate: 45, opacity: 0 }}
-          animate={{ x: 30, y: -30, rotate: 20, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
-          className="absolute top-0 right-0 w-48 sm:w-64 pointer-events-none scale-x-[-1] drop-shadow-md"
-        />
-
-        {/* 2. Small marigold flowers floating */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <motion.img
-              key={i}
-              src="/assets/images/marigold.png"
-              alt="Marigold Flower"
-              initial={{
-                y: -50,
-                x: `${10 + i * 12}%`,
-                opacity: 0,
-                scale: 0.5,
-              }}
-              animate={{
-                y: ['0px', '25px', '0px'],
-                opacity: [0, 1, 0.8],
-                scale: [0.6, 1, 0.9],
-              }}
-              transition={{
-                delay: 0.3 + i * 0.15,
-                duration: 3.5,
-                repeat: Infinity,
-                repeatType: 'reverse',
-              }}
-              className="absolute w-12 sm:w-16 h-auto drop-shadow"
-            />
-          ))}
-        </div>
-
         {/* Main Content Container */}
         <div className="relative z-10 text-center max-w-lg px-6 flex flex-col items-center">
           {/* 4. Diyas glowing softly around */}
