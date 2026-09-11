@@ -97,7 +97,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
       const canvas = await getCertificateCanvas();
       const certificateBase64 = canvas ? canvas.toDataURL('image/png') : null;
 
-      const response = await fetch('http://localhost:5000/api/send-certificate', {
+      const response = await fetch('/api/send-certificate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -117,14 +117,14 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
       } else {
         setStatusMsg({
           type: 'error',
-          text: result.message || 'Server error while sending email. Please check server/.env settings.',
+          text: result.message || 'Error sending email. Please verify credentials.',
         });
       }
     } catch (err) {
       console.error('API call error:', err);
       setStatusMsg({
         type: 'error',
-        text: 'Could not connect to Email Server at http://localhost:5000. Please start node server/index.js',
+        text: 'Failed to send certificate email: ' + err.message,
       });
     } finally {
       setIsSending(false);
