@@ -25,18 +25,7 @@ export const Activity = () => {
           <ProgressStepper currentStep={3} />
         </div>
 
-        {/* Heading & Instructions */}
-        <div className="text-center max-w-xl mx-auto mb-6">
-          <span className="px-4 py-1.5 bg-amber-100 text-amber-900 border border-amber-300 rounded-full text-xs font-extrabold uppercase tracking-wider">
-            {t('activityStep3')}
-          </span>
-          <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-amber-950 mt-2 mb-1">
-            {t('activityTitle')}
-          </h2>
-          <p className="text-amber-900/80 text-sm sm:text-base font-semibold">
-            "{t('activitySubtitle')}"
-          </p>
-        </div>
+
 
         {/* HTML Canvas Dot Activity Game */}
         <div className="w-full">
