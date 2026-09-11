@@ -8,84 +8,81 @@ export const DotActivity = ({ onComplete }) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState('Tap Dot #1 to start connecting Lord Vinayagar! ✏️');
 
-  // 50 Dots forming the outer silhouette contour of Lord Vinayagar
+  // 50 Dots aligned on 820x1024 image along gray line contour
   const dots = [
-    // Crown (Mukut) Top & Upper Curve
-    { id: 1, x: 300, y: 172, label: '1' },
-    { id: 2, x: 320, y: 182, label: '2' },
-    { id: 3, x: 340, y: 200, label: '3' },
-    { id: 4, x: 358, y: 222, label: '4' },
-    { id: 5, x: 338, y: 236, label: '5' },
-    { id: 6, x: 318, y: 242, label: '6' },
-    { id: 7, x: 298, y: 242, label: '7' },
-    { id: 8, x: 278, y: 236, label: '8' },
+    // --- Crown (Mukut) Outer Top & Sides ---
+    { id: 1, x: 410, y: 275, label: '1' },
+    { id: 2, x: 442, y: 292, label: '2' },
+    { id: 3, x: 470, y: 315, label: '3' },
+    { id: 4, x: 495, y: 345, label: '4' },
+    { id: 5, x: 460, y: 375, label: '5' },
+    { id: 6, x: 430, y: 382, label: '6' },
+    { id: 7, x: 410, y: 384, label: '7' },
+    { id: 8, x: 390, y: 382, label: '8' },
+    { id: 9, x: 360, y: 375, label: '9' },
+    { id: 10, x: 325, y: 345, label: '10' },
+    { id: 11, x: 350, y: 315, label: '11' },
+    { id: 12, x: 378, y: 292, label: '12' },
 
-    // Right Ear & Right Side Head
-    { id: 9, x: 362, y: 254, label: '9' },
-    { id: 10, x: 395, y: 250, label: '10' },
-    { id: 11, x: 426, y: 262, label: '11' },
-    { id: 12, x: 440, y: 288, label: '12' },
-    { id: 13, x: 428, y: 325, label: '13' },
-    { id: 14, x: 395, y: 348, label: '14' },
-    { id: 15, x: 370, y: 346, label: '15' },
+    // --- Right Ear & Side ---
+    { id: 13, x: 505, y: 385, label: '13' },
+    { id: 14, x: 550, y: 400, label: '14' },
+    { id: 15, x: 585, y: 430, label: '15' },
+    { id: 16, x: 590, y: 470, label: '16' },
+    { id: 17, x: 575, y: 510, label: '17' },
+    { id: 18, x: 535, y: 535, label: '18' },
 
-    // Right Arm & Hand (Holding Modak)
-    { id: 16, x: 412, y: 318, label: '16' },
-    { id: 17, x: 442, y: 328, label: '17' },
-    { id: 18, x: 462, y: 345, label: '18' },
-    { id: 19, x: 448, y: 375, label: '19' },
-    { id: 20, x: 428, y: 400, label: '20' },
-    { id: 21, x: 405, y: 435, label: '21' },
+    // --- Right Arm & Hand (Holding Modak) ---
+    { id: 19, x: 570, y: 565, label: '19' },
+    { id: 20, x: 605, y: 485, label: '20' },
+    { id: 21, x: 625, y: 520, label: '21' },
+    { id: 22, x: 605, y: 560, label: '22' },
+    { id: 23, x: 575, y: 600, label: '23' },
 
-    // Right Knee & Body
-    { id: 22, x: 385, y: 475, label: '22' },
-    { id: 23, x: 425, y: 505, label: '23' },
-    { id: 24, x: 432, y: 538, label: '24' },
-    { id: 25, x: 395, y: 565, label: '25' },
+    // --- Right Body, Knee & Feet ---
+    { id: 24, x: 545, y: 660, label: '24' },
+    { id: 25, x: 575, y: 710, label: '25' },
+    { id: 26, x: 570, y: 755, label: '26' },
+    { id: 27, x: 535, y: 785, label: '27' },
+    { id: 28, x: 485, y: 792, label: '28' },
+    { id: 29, x: 445, y: 795, label: '29' },
 
-    // Bottom Lotus Base
-    { id: 26, x: 360, y: 578, label: '26' },
-    { id: 27, x: 320, y: 585, label: '27' },
-    { id: 28, x: 280, y: 585, label: '28' },
-    { id: 29, x: 240, y: 578, label: '29' },
+    // --- Bottom Lotus Pedestal Base ---
+    { id: 30, x: 495, y: 828, label: '30' },
+    { id: 31, x: 410, y: 838, label: '31' },
+    { id: 32, x: 325, y: 828, label: '32' },
 
-    // Left Foot & Knee
-    { id: 30, x: 205, y: 565, label: '30' },
-    { id: 31, x: 168, y: 538, label: '31' },
-    { id: 32, x: 175, y: 505, label: '32' },
-    { id: 33, x: 215, y: 475, label: '33' },
+    // --- Left Feet, Knee & Body ---
+    { id: 33, x: 375, y: 795, label: '33' },
+    { id: 34, x: 335, y: 792, label: '34' },
+    { id: 35, x: 285, y: 785, label: '35' },
+    { id: 36, x: 250, y: 755, label: '36' },
+    { id: 37, x: 245, y: 710, label: '37' },
+    { id: 38, x: 275, y: 660, label: '38' },
 
-    // Left Hand & Arm (Blessing Hand)
-    { id: 34, x: 195, y: 435, label: '34' },
-    { id: 35, x: 172, y: 400, label: '35' },
-    { id: 36, x: 152, y: 375, label: '36' },
+    // --- Left Arm & Hand (Holding Axe) ---
+    { id: 39, x: 245, y: 600, label: '39' },
+    { id: 40, x: 215, y: 560, label: '40' },
+    { id: 41, x: 195, y: 520, label: '41' },
+    { id: 42, x: 215, y: 485, label: '42' },
+    { id: 43, x: 250, y: 565, label: '43' },
 
-    // Left Upper Arm & Hand (Holding Axe)
-    { id: 37, x: 138, y: 345, label: '37' },
-    { id: 38, x: 158, y: 328, label: '38' },
-    { id: 39, x: 188, y: 318, label: '39' },
+    // --- Left Ear & Head ---
+    { id: 44, x: 285, y: 535, label: '44' },
+    { id: 45, x: 245, y: 510, label: '45' },
+    { id: 46, x: 230, y: 470, label: '46' },
+    { id: 47, x: 235, y: 430, label: '47' },
+    { id: 48, x: 270, y: 400, label: '48' },
+    { id: 49, x: 315, y: 385, label: '49' },
 
-    // Left Ear & Left Side Head
-    { id: 40, x: 230, y: 346, label: '40' },
-    { id: 41, x: 205, y: 348, label: '41' },
-    { id: 42, x: 172, y: 325, label: '42' },
-    { id: 43, x: 160, y: 288, label: '43' },
-    { id: 44, x: 174, y: 262, label: '44' },
-    { id: 45, x: 205, y: 250, label: '45' },
-    { id: 46, x: 238, y: 254, label: '46' },
-
-    // Left Crown & Top Peak
-    { id: 47, x: 242, y: 222, label: '47' },
-    { id: 48, x: 260, y: 200, label: '48' },
-    { id: 49, x: 280, y: 182, label: '49' },
-    { id: 50, x: 300, y: 172, label: '50' },
+    // --- Closing Crown Top ---
+    { id: 50, x: 410, y: 275, label: '50' },
   ];
 
   // Handle tapping a dot
   const handleDotClick = (index) => {
     if (isCompleted) return;
 
-    // Tapping current dot or next sequential dots
     if (index >= currentDotIndex) {
       const nextIndex = index + 1;
       setCurrentDotIndex(nextIndex);
@@ -131,18 +128,13 @@ export const DotActivity = ({ onComplete }) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto px-2 sm:px-4">
-      {/* Top Dynamic Feedback Banner */}
-      <motion.div
-        key={feedbackMsg}
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="mb-4 px-5 py-2 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-100 border-2 border-amber-400 rounded-full text-amber-950 font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-2"
-      >
-        <Sparkles className="w-4 h-4 text-orange-600 animate-spin-slow" />
+      {/* Top Dynamic Feedback Banner (Steady, no shake on update) */}
+      <div className="mb-4 px-5 py-2 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-100 border-2 border-amber-400 rounded-full text-amber-950 font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-2">
+        <Sparkles className="w-4 h-4 text-orange-600" />
         <span>{feedbackMsg}</span>
-      </motion.div>
+      </div>
 
-      {/* Main Worksheet Card with Colorful Pencil Border Frame */}
+      {/* Main Worksheet Card */}
       <div className="w-full bg-white rounded-3xl p-3 sm:p-5 shadow-2xl border-4 border-amber-400 relative overflow-hidden flex flex-col items-center">
         
         {/* Top Pencil Border Bar */}
@@ -172,36 +164,36 @@ export const DotActivity = ({ onComplete }) => {
           </div>
         </div>
 
-        {/* 2-Layer Interactive Canvas: Layer 1 Clean Background Image + Layer 2 Interactive SVG Dots */}
-        <div className="relative w-full max-w-[550px] aspect-[600/650] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
-          
-          {/* LAYER 1: Clean Vinayagar Line Art Background Image (User uploaded image) */}
-          <img
-            src="/assets/images/vinayagar_clean.png"
-            alt="Vinayagar Line Art Base"
-            className="absolute inset-0 w-full h-full object-contain p-2 pointer-events-none select-none z-0"
-          />
-
-          {/* LAYER 2: Interactive SVG Overlay for Connected Lines & Interactive Dots */}
+        {/* Interactive SVG Canvas with Embedded Image for 1:1 Pixel Lock */}
+        <div className="relative w-full max-w-[550px] aspect-[820/1024] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
           <svg
-            viewBox="0 0 600 650"
+            viewBox="0 0 820 1024"
             className="w-full h-full select-none relative z-10"
             style={{ touchAction: 'manipulation' }}
           >
+            {/* Embedded Background Vinayagar Image - locked to 820x1024 */}
+            <image
+              href="/assets/images/vinayagar_clean.png"
+              x="0"
+              y="0"
+              width="820"
+              height="1024"
+              preserveAspectRatio="xMidYMid meet"
+            />
+
             {/* DYNAMIC CONNECTED PATH LINE OVERLAY */}
             {currentDotIndex > 1 && (
               <path
                 d={connectedPathString}
                 fill="none"
                 stroke="#EA580C"
-                strokeWidth="5"
+                strokeWidth="6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="drop-shadow-md transition-all duration-300"
               />
             )}
 
-            {/* 50 INTERACTIVE DOTS & LABELS OVERLAY */}
+            {/* 50 STEADY INTERACTIVE DOTS (No shaking, no scale hover) */}
             {dots.map((dot, index) => {
               const isConnected = index < currentDotIndex;
               const isNextTarget = index === currentDotIndex && !isCompleted;
@@ -210,37 +202,33 @@ export const DotActivity = ({ onComplete }) => {
                 <g
                   key={dot.id}
                   onClick={() => handleDotClick(index)}
-                  className="cursor-pointer transition-transform duration-200 hover:scale-125"
+                  className="cursor-pointer"
                   style={{ touchAction: 'none' }}
                 >
-                  {/* Outer pulse aura for next target dot */}
+                  {/* Steady highlight ring for current active target dot */}
                   {isNextTarget && (
-                    <>
-                      <circle cx={dot.x} cy={dot.y} r="18" fill="#FDE047" opacity="0.5" className="animate-ping" />
-                      <circle cx={dot.x} cy={dot.y} r="14" fill="#F97316" opacity="0.4" />
-                    </>
+                    <circle cx={dot.x} cy={dot.y} r="18" fill="#F97316" opacity="0.3" />
                   )}
 
                   {/* Main Dot Circle */}
                   <circle
                     cx={dot.x}
                     cy={dot.y}
-                    r={isNextTarget ? "9" : "6.5"}
+                    r={isNextTarget ? "10" : "7.5"}
                     fill={isConnected ? '#10B981' : isNextTarget ? '#EA580C' : '#0F172A'}
                     stroke="#FFFFFF"
-                    strokeWidth="2"
-                    className="drop-shadow-sm"
+                    strokeWidth="2.5"
                   />
 
                   {/* Dot Number Label */}
                   <text
-                    x={dot.x + (dot.x > 300 ? 12 : -12)}
-                    y={dot.y + 4}
-                    fontSize="11"
+                    x={dot.x + (dot.x >= 410 ? 16 : -16)}
+                    y={dot.y + 5}
+                    fontSize="14"
                     fontWeight="800"
                     fontFamily="Inter, sans-serif"
                     fill={isConnected ? '#065F46' : isNextTarget ? '#C2410C' : '#1E293B'}
-                    textAnchor={dot.x > 300 ? 'start' : 'end'}
+                    textAnchor={dot.x >= 410 ? 'start' : 'end'}
                     className="select-none pointer-events-none"
                   >
                     {dot.label}
