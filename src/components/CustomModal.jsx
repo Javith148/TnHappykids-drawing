@@ -15,13 +15,13 @@ export const CustomModal = ({ isOpen, onClose, onConfirm, title, message, button
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-10 sm:pt-16 bg-amber-950/60 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:pt-16 bg-amber-950/60 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 30 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-md bg-gradient-to-b from-[#FFF9EE] via-[#FFF3D6] to-[#FFE8B8] rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center overflow-hidden -translate-y-5 mt-4 sm:mt-8 my-auto"
+          className="relative w-full max-w-md bg-gradient-to-b from-[#FFF9EE] via-[#FFF3D6] to-[#FFE8B8] rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center overflow-hidden my-auto sm:-translate-y-5 sm:mt-8"
         >
           {/* Top Marigold Garlands */}
           <div className="absolute -top-3 left-0 right-0 flex justify-between px-4 opacity-90">
