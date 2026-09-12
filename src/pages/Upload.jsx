@@ -80,7 +80,7 @@ export const Upload = () => {
       videoFileSize: videoInfo.size,
     });
 
-    navigate('/activity');
+    navigate('/advertisement');
   };
 
   return (
@@ -89,7 +89,7 @@ export const Upload = () => {
         
         {/* Stepper Progress */}
         <div className="w-full mb-6 max-w-2xl relative z-10">
-          <ProgressStepper currentStep={2} />
+          <ProgressStepper currentStep={3} />
         </div>
 
         {/* Title Header */}
@@ -155,7 +155,7 @@ export const Upload = () => {
             onClick={handleContinue}
             className="w-full py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-2xl font-heading font-extrabold text-base shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 cursor-pointer border-2 border-yellow-300 flex items-center justify-center gap-2"
           >
-            <span>{t('continueToActivity')}</span>
+            <span>{t('continueToRewards')}</span>
             <ArrowRight className="w-5 h-5" />
           </motion.button>
         </div>

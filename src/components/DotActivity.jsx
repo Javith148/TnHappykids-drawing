@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Sparkles, RefreshCw, ArrowRight, CheckCircle2, Award, Zap } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const DotActivity = ({ onComplete }) => {
+  const { t } = useLanguage();
   const [currentDotIndex, setCurrentDotIndex] = useState(0); // 0 to 49
   const [isCompleted, setIsCompleted] = useState(false);
-  const [feedbackMsg, setFeedbackMsg] = useState('Tap Dot #1 to start connecting Lord Vinayagar! ✏️');
+  const [feedbackMsg, setFeedbackMsg] = useState('Tap Dot #1 to start connecting Lord Vinayagar!');
 
   // 50 Dots aligned on 820x1024 image along gray line contour
   const dots = [
@@ -89,7 +91,7 @@ export const DotActivity = ({ onComplete }) => {
 
       if (nextIndex >= dots.length) {
         setIsCompleted(true);
-        setFeedbackMsg('🎉 Amazing! You completed Vinayagar Connect the Dots!');
+        setFeedbackMsg('Amazing! You completed Vinayagar Connect the Dots!');
         confetti({
           particleCount: 150,
           spread: 90,
@@ -97,7 +99,7 @@ export const DotActivity = ({ onComplete }) => {
           colors: ['#EA580C', '#F59E0B', '#10B981', '#FFD700', '#EC4899', '#3B82F6'],
         });
       } else {
-        setFeedbackMsg(`Great job! Now tap Dot #${dots[nextIndex].label} ✨`);
+        setFeedbackMsg(`Great job! Now tap Dot #${dots[nextIndex].label}`);
       }
     }
   };
@@ -105,7 +107,7 @@ export const DotActivity = ({ onComplete }) => {
   const handleCompleteAll = () => {
     setCurrentDotIndex(dots.length);
     setIsCompleted(true);
-    setFeedbackMsg('🎉 Fantastic! You completed Vinayagar Connect the Dots!');
+    setFeedbackMsg('Fantastic! You completed Vinayagar Connect the Dots!');
     confetti({
       particleCount: 150,
       spread: 90,
@@ -117,7 +119,7 @@ export const DotActivity = ({ onComplete }) => {
   const handleReset = () => {
     setCurrentDotIndex(0);
     setIsCompleted(false);
-    setFeedbackMsg('Tap Dot #1 to start connecting Lord Vinayagar! ✏️');
+    setFeedbackMsg('Tap Dot #1 to start connecting Lord Vinayagar!');
   };
 
   // Build SVG path string for connected dots up to currentDotIndex
@@ -129,14 +131,13 @@ export const DotActivity = ({ onComplete }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto px-2 sm:px-4">
       {/* Top Dynamic Feedback Banner (Steady, no shake on update) */}
-      <div className="mb-4 px-5 py-2 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-100 border-2 border-amber-400 rounded-full text-amber-950 font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-2">
-        <Sparkles className="w-4 h-4 text-orange-600" />
+      <div className="mb-4 px-5 py-2 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-100 border-2 border-amber-400 rounded-full text-amber-950 font-extrabold text-xs sm:text-sm shadow-md flex items-center justify-center">
         <span>{feedbackMsg}</span>
       </div>
 
       {/* Main Worksheet Card */}
       <div className="w-full bg-white rounded-3xl p-3 sm:p-5 shadow-2xl border-4 border-amber-400 relative overflow-hidden flex flex-col items-center">
-        
+
         {/* Top Pencil Border Bar */}
         <div className="w-full flex justify-between items-center mb-3 px-1 sm:px-3 overflow-hidden gap-1">
           {['#EF4444', '#F97316', '#EAB308', '#10B981', '#06B6D4', '#3B82F6', '#8B5CF6', '#EC4899', '#EF4444', '#F97316', '#EAB308', '#10B981'].map((color, i) => (
@@ -152,12 +153,25 @@ export const DotActivity = ({ onComplete }) => {
 
         {/* Interactive SVG Canvas with Embedded Image for 1:1 Pixel Lock */}
         <div className="relative w-full max-w-[550px] aspect-[820/1024] bg-white border-2 border-amber-200 rounded-2xl p-2 shadow-inner flex items-center justify-center overflow-hidden">
+
+          {/* White Flash Transition Fade Effect when completed */}
+          <AnimatePresence>
+            {isCompleted && (
+              <motion.div
+                initial={{ opacity: 0.9 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="absolute inset-0 bg-white pointer-events-none z-30 rounded-2xl"
+              />
+            )}
+          </AnimatePresence>
+
           <svg
             viewBox="0 0 820 1024"
             className="w-full h-full select-none relative z-10"
             style={{ touchAction: 'manipulation' }}
           >
-            {/* Embedded Background Vinayagar Image - locked to 820x1024 */}
+            {/* Base Outline Vinayagar Image - locked to 820x1024 */}
             <image
               href="/assets/images/vinayagar_clean.png"
               x="0"
@@ -167,7 +181,21 @@ export const DotActivity = ({ onComplete }) => {
               preserveAspectRatio="xMidYMid meet"
             />
 
-            {/* DYNAMIC CONNECTED PATH LINE OVERLAY */}
+            {/* Revealed Colored Lord Vinayagar Image - 1:1 EXACT SAME SIZE & POSITION */}
+            <image
+              href="/assets/images/vinayagar_colored.png"
+              x="0"
+              y="0"
+              width="820"
+              height="1024"
+              preserveAspectRatio="xMidYMid meet"
+              style={{
+                opacity: isCompleted ? 1 : 0,
+                transition: 'opacity 0.8s ease-in-out',
+              }}
+            />
+
+            {/* DYNAMIC CONNECTED PATH LINE OVERLAY (Fades out on completion) */}
             {currentDotIndex > 1 && (
               <path
                 d={connectedPathString}
@@ -176,10 +204,14 @@ export const DotActivity = ({ onComplete }) => {
                 strokeWidth="6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                style={{
+                  opacity: isCompleted ? 0 : 1,
+                  transition: 'opacity 0.5s ease-in-out',
+                }}
               />
             )}
 
-            {/* 50 STEADY INTERACTIVE DOTS (No shaking, no scale hover) */}
+            {/* 50 STEADY INTERACTIVE DOTS (Fade out on completion) */}
             {dots.map((dot, index) => {
               const isConnected = index < currentDotIndex;
               const isNextTarget = index === currentDotIndex && !isCompleted;
@@ -189,7 +221,11 @@ export const DotActivity = ({ onComplete }) => {
                   key={dot.id}
                   onClick={() => handleDotClick(index)}
                   className="cursor-pointer"
-                  style={{ touchAction: 'none' }}
+                  style={{
+                    touchAction: 'none',
+                    opacity: isCompleted ? 0 : 1,
+                    transition: 'opacity 0.5s ease-in-out',
+                  }}
                 >
                   {/* Steady highlight ring for current active target dot */}
                   {isNextTarget && (
@@ -223,74 +259,63 @@ export const DotActivity = ({ onComplete }) => {
               );
             })}
           </svg>
-
-          {/* Completion Vinayagar Celebration Overlay */}
-          <AnimatePresence>
-            {isCompleted && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center bg-amber-50/90 backdrop-blur-sm rounded-2xl border-4 border-amber-400"
-              >
-                <motion.img
-                  src="/assets/images/vinayagar.png"
-                  alt="Lord Vinayagar Revealed"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-44 sm:w-56 h-auto drop-shadow-2xl mb-3"
-                />
-
-                <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white px-6 py-2 rounded-full font-heading font-extrabold text-base sm:text-lg shadow-lg border-2 border-yellow-300 mb-4">
-                  ✨ Excellent! You Revealed Lord Vinayagar! ✨
-                </div>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleReset}
-                    className="px-4 py-2 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded-full font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    <span>Play Again</span>
-                  </button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={onComplete}
-                    className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full font-bold text-sm shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer border border-emerald-300"
-                  >
-                    <span>Continue to Rewards</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
-        {/* Action Controls & Quick Fill Bar */}
-        <div className="mt-3 w-full flex items-center justify-between text-xs text-amber-950 font-bold px-2">
-          <span>
-            Connected: {currentDotIndex} / {dots.length} Dots
-          </span>
-
-          <div className="flex items-center gap-3">
-            {!isCompleted && (
-              <button
-                onClick={handleCompleteAll}
-                className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-extrabold text-[11px] shadow-sm flex items-center gap-1 transition-colors cursor-pointer"
-              >
-                <Zap className="w-3 h-3 text-yellow-200" />
-                <span>Connect All Dots</span>
-              </button>
-            )}
-            <button
-              onClick={handleReset}
-              className="text-amber-800 hover:text-amber-950 underline flex items-center gap-1 cursor-pointer text-[11px]"
+        {/* Action Controls & Continue Button Bar */}
+        <div className="mt-4 w-full px-2">
+          {isCompleted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-col items-center gap-2.5 w-full max-w-md mx-auto"
             >
-              <RefreshCw className="w-3 h-3" />
-              <span>Reset</span>
-            </button>
-          </div>
+              <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white px-5 py-1.5 rounded-full font-heading font-extrabold text-xs sm:text-sm shadow-md border-2 border-yellow-300">
+                Lord Vinayagar Revealed!
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onComplete}
+                className="w-full py-3.5 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-2xl font-heading font-extrabold text-xs sm:text-sm shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 flex items-center justify-center gap-2 cursor-pointer border-2 border-yellow-300"
+              >
+                <span>{t('continueToUpload')}</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </motion.button>
+
+              <button
+                onClick={handleReset}
+                className="text-xs font-bold text-amber-800 hover:text-amber-950 underline flex items-center gap-1.5 cursor-pointer pt-0.5"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Reset</span>
+              </button>
+            </motion.div>
+          ) : (
+            <div className="flex items-center justify-between text-xs text-amber-950 font-bold">
+              <span>
+                Connected: {currentDotIndex} / {dots.length} Dots
+              </span>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleCompleteAll}
+                  className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-extrabold text-[11px] shadow-sm flex items-center gap-1 transition-colors cursor-pointer"
+                >
+                  <Zap className="w-3 h-3 text-yellow-200" />
+                  <span>Connect All Dots</span>
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="text-amber-800 hover:text-amber-950 underline flex items-center gap-1 cursor-pointer text-[11px]"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
 

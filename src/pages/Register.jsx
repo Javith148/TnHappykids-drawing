@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Baby, Phone, Mail, Sparkles, ArrowRight, AlertCircle, Calendar } from 'lucide-react';
@@ -25,6 +25,8 @@ export const Register = () => {
 
   const [errors, setErrors] = useState({});
   const [isAgeModalOpen, setIsAgeModalOpen] = useState(false);
+  const [isUploadNoticeOpen, setIsUploadNoticeOpen] = useState(false);
+  const [noticeTimer, setNoticeTimer] = useState(15);
 
   const calculateAge = (dobString) => {
     if (!dobString) return '';
@@ -45,7 +47,7 @@ export const Register = () => {
       setFormData((prev) => ({
         ...prev,
         childDob: value,
-        childAge: calculatedAge ? String(calculatedAge) : prev.childAge,
+        childAge: calculatedAge !== '' ? String(calculatedAge) : prev.childAge,
       }));
       if (errors.childDob) setErrors((prev) => ({ ...prev, childDob: '' }));
       if (errors.childAge) setErrors((prev) => ({ ...prev, childAge: '' }));
@@ -69,10 +71,37 @@ export const Register = () => {
       return;
     }
 
-    // Save state & navigate to /upload
-    updateRegistration(formData);
-    navigate('/upload');
+    // Open upload instruction modal before proceeding to dot activity
+    setNoticeTimer(15);
+    setIsUploadNoticeOpen(true);
   };
+
+  const handleProceedToActivity = () => {
+    updateRegistration(formData);
+    setIsUploadNoticeOpen(false);
+    navigate('/activity');
+  };
+
+  // Auto redirect timer for 15 seconds
+  useEffect(() => {
+    let interval = null;
+    if (isUploadNoticeOpen) {
+      setNoticeTimer(15);
+      interval = setInterval(() => {
+        setNoticeTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            handleProceedToActivity();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isUploadNoticeOpen]);
 
   return (
     <FestiveBackground>
@@ -204,8 +233,8 @@ export const Register = () => {
               <input
                 type="date"
                 name="childDob"
-                min="2021-01-01"
-                max="2025-12-31"
+                min="2015-01-01"
+                max="2026-12-31"
                 value={formData.childDob}
                 onChange={handleChange}
                 className={`w-full px-4 py-2.5 sm:py-3 bg-amber-50/60 rounded-xl border-2 text-xs sm:text-sm text-amber-950 placeholder-amber-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-amber-200 transition-all ${errors.childDob ? 'border-rose-500' : 'border-amber-300/80 focus:border-orange-500'
@@ -231,7 +260,7 @@ export const Register = () => {
                 type="number"
                 name="childAge"
                 min="1"
-                max="12"
+                max="18"
                 value={formData.childAge}
                 onChange={handleChange}
                 placeholder={t('childAgePlaceholder')}
@@ -323,7 +352,7 @@ export const Register = () => {
                 type="submit"
                 className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-xl font-heading font-extrabold text-sm sm:text-base shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 cursor-pointer border-2 border-yellow-300 flex items-center justify-center gap-2"
               >
-                <span>{t('continueToUpload')}</span>
+                <span>{t('continueToActivity')}</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.button>
             </div>
@@ -338,6 +367,27 @@ export const Register = () => {
           message={t('ageModalMessage')}
           buttonText={t('closeModal')}
         />
+
+        {/* Upload Instruction Modal on Form Submit */}
+        <CustomModal
+          isOpen={isUploadNoticeOpen}
+          onClose={() => setIsUploadNoticeOpen(false)}
+          onConfirm={handleProceedToActivity}
+          title={t('uploadInstructionTitle')}
+          message={t('uploadInstructionMsg')}
+          buttonText={`${t('uploadInstructionBtn')} (${noticeTimer}s)`}
+        >
+          <div className="bg-amber-50/90 rounded-xl p-3 sm:p-4 border border-amber-300 text-left space-y-2.5 my-2 text-xs sm:text-sm font-semibold text-amber-950 shadow-inner">
+            <div className="flex items-center gap-2.5">
+              <span className="w-7 h-7 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-extrabold shrink-0 shadow-md">1</span>
+              <span>🎨 Vinayagar Drawing Photo / ஓவியப் படம்</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-7 h-7 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-extrabold shrink-0 shadow-md">2</span>
+              <span>🎥 10-Sec Activity Video Clip / 10 வினாடி வீடியோ</span>
+            </div>
+          </div>
+        </CustomModal>
       </div>
     </FestiveBackground>
   );

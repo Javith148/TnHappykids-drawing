@@ -61,7 +61,7 @@ export const RewardCard = ({ childName = 'Little Artist', points = 100, onComple
 
       {/* Header */}
       <h2 className="font-heading text-2xl sm:text-4xl font-extrabold text-amber-950 mb-1">
-        Congratulations, {childName}! 🎉
+        Congratulations, {childName}!
       </h2>
       <p className="text-sm sm:text-base text-amber-900 font-semibold mb-6">
         You are a Star Participant in the Vinayagar Chaturthi Drawing Competition!
@@ -105,7 +105,7 @@ export const RewardCard = ({ childName = 'Little Artist', points = 100, onComple
         </span>
 
         <h3 className="text-lg font-bold text-amber-100 mb-1">Your Total Reward Points</h3>
-        
+
         <div className="font-heading text-5xl sm:text-6xl font-extrabold text-yellow-200 tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
           <Star className="w-10 h-10 fill-yellow-300 text-yellow-300 animate-spin-slow" />
           <span>{displayedPoints}</span>

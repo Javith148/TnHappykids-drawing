@@ -62,6 +62,12 @@ export const translations = {
     luckyDrawSubtitle: "10 Lucky children selected via random draw will receive Exclusive Special Gift Hampers!",
     luckyDrawDesc: "Every registered participant gets a chance to enter the bumper Lucky Draw!",
 
+    // Stepper Labels
+    stepperStep1: "Registration",
+    stepperStep2: "Dot Activity",
+    stepperStep3: "Upload Drawing",
+    stepperStep4: "Reward Points",
+
     // Registration Form
     regStep1: "Step 01 • Kid's Registration",
     regTitle: "Register Your Child",
@@ -73,39 +79,44 @@ export const translations = {
     childDob: "Child's Date of Birth",
     childDobPlaceholder: "Select Date of Birth",
     childAge: "Child's Age (Years)",
-    childAgePlaceholder: "Age (Up to 5 years)",
+    childAgePlaceholder: "Age (3 to 5 years)",
     whatsappNumber: "WhatsApp Phone Number",
     whatsappNumberPlaceholder: "10-digit WhatsApp number",
     branchLocation: "Nearest Branch Location",
     selectBranch: "Select Branch",
     continueToUpload: "Continue to Upload Drawing",
+    continueToActivity: "Continue to Dot Activity",
 
     // Age Notice Modal
-    ageModalTitle: "Eligible Age Notice (Up to 5 Years)",
-    ageModalMessage: "This competition is exclusively designed for young children aged up to 5 years. Children above 5 years of age are not eligible for this competition.",
+    ageModalTitle: "Eligible Age Notice (3 to 5 Years)",
+    ageModalMessage: "This competition is exclusively designed for children aged 3 to 5 years. Children below 3 years or above 5 years of age are not eligible for this competition.",
     closeModal: "Understand & Close",
 
+    // Upload Instruction Modal
+    uploadInstructionTitle: "Get Your Files Ready!",
+    uploadInstructionMsg: "Please take or keep your child's Vinayagar drawing photo and 10-second drawing video clip ready! You will upload them after completing the Vinayagar dot activity game.",
+    uploadInstructionBtn: "Got It, Start Dot Activity",
+
     // Upload Page
-    uploadStep2: "Step 02 • Artwork Submission",
+    uploadStep2: "Step 03 • Artwork Submission",
     uploadTitle: "Show Us Your Little Artist's Creativity",
     uploadSubtitle: "Please upload your child's Vinayagar drawing image and a short activity video clip.",
     drawingTitle: "Vinayagar Drawing",
     drawingSubtitle: "Upload photo of your child's artwork",
     videoTitle: "Activity Video",
     videoSubtitle: "Upload short video of your child drawing",
-    continueToActivity: "Continue to Activity",
     drawingRequiredTitle: "Drawing Image Required 🎨",
     drawingRequiredMsg: "Please select and upload your child's Vinayagar drawing image to proceed.",
     videoRequiredTitle: "Activity Video Required 🎥",
     videoRequiredMsg: "Please select and upload a short activity video clip to proceed.",
 
     // Dot Activity Page
-    activityStep3: "Step 03 • Interactive Game",
+    activityStep3: "Step 02 • Interactive Game",
     activityTitle: "Complete Lord Vinayagar",
     activitySubtitle: "Join the dots from 1 to 50 to reveal Vinayagar.",
     connectAllDots: "Connect All Dots",
     reset: "Reset",
-    continueToRewards: "Continue to Rewards",
+    continueToRewards: "Continue to Upload Files",
 
     // Complete / Success Page
     completeTitle: "Registration Complete!",
@@ -202,6 +213,12 @@ export const translations = {
     luckyDrawSubtitle: "லக்கி டிரா மூலம் தேர்வு செய்யப்படும் 10 அதிர்ஷ்டசாலி குழந்தைகளுக்கு பிரத்யேக சிறப்புப் பரிசுகள் வழங்கப்பெறும்!",
     luckyDrawDesc: "பதிவுசெய்யும் அனைத்துக் குழந்தைகளுக்கும் லக்கி டிராவில் பங்கேற்கும் அரிய வாய்ப்பு!",
 
+    // Stepper Labels
+    stepperStep1: "குழந்தை பதிவு",
+    stepperStep2: "புள்ளி விளையாட்டு",
+    stepperStep3: "ஓவியம் அப்லோட்",
+    stepperStep4: "பரிசுகள்",
+
     // Registration Form
     regStep1: "படி 01 • குழந்தை பதிவு",
     regTitle: "குழந்தையின் தகவல்கள் பதிவு",
@@ -213,39 +230,44 @@ export const translations = {
     childDob: "குழந்தையின் பிறந்த தேதி",
     childDobPlaceholder: "பிறந்த தேதியைத் தேர்ந்தெடுக்கவும்",
     childAge: "குழந்தையின் வயது",
-    childAgePlaceholder: "வயது (5 வயது வரை)",
+    childAgePlaceholder: "வயது (3 முதல் 5 வயது வரை)",
     whatsappNumber: "வாட்ஸ்அப் தொலைபேசி எண்",
     whatsappNumberPlaceholder: "10-இலக்க வாட்ஸ்அப் எண்",
     branchLocation: "அருகிலுள்ள கிளை மையம்",
     selectBranch: "கிளையைத் தேர்ந்தெடுக்கவும்",
     continueToUpload: "ஓவியம் அப்லோட் செய்ய தொடரவும்",
+    continueToActivity: "புள்ளி விளையாட்டிற்குச் செல்லவும்",
 
     // Age Notice Modal
-    ageModalTitle: "வயது தகுதி அறிவிப்பு (5 வயது வரை)",
-    ageModalMessage: "இப்போட்டி 5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது. 5 வயதிற்கு மேற்பட்ட குழந்தைகள் இப்போட்டியில் பங்கேற்க முடியாது.",
+    ageModalTitle: "வயது தகுதி அறிவிப்பு (3 முதல் 5 வயது வரை)",
+    ageModalMessage: "இப்போட்டி 3 முதல் 5 வயது வரையிலான குழந்தைகளுக்கு மட்டுமே பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது. 3 வயதிற்குக் குறைவான அல்லது 5 வயதிற்கு மேற்பட்ட குழந்தைகள் இப்போட்டியில் பங்கேற்க முடியாது.",
     closeModal: "புரிந்துகொண்டேன்",
 
+    // Upload Instruction Modal
+    uploadInstructionTitle: "கோப்புகளைத் தயார் நிலையில் வைக்கவும்!",
+    uploadInstructionMsg: "உங்கள் குழந்தையின் விநாயகர் ஓவியப் படம் மற்றும் 10 வினாடி வரைதல் வீடியோவைத் தயார் நிலையில் வைக்கவும்! விநாயகர் புள்ளி விளையாட்டுக்குப் பிறகு இவற்றை அப்லோட் செய்யலாம்.",
+    uploadInstructionBtn: "புரிந்தது, புள்ளி விளையாட்டு தொடங்குக",
+
     // Upload Page
-    uploadStep2: "படி 02 • ஓவியம் சமர்ப்பித்தல்",
+    uploadStep2: "படி 03 • ஓவியம் சமர்ப்பித்தல்",
     uploadTitle: "உங்கள் செல்லக் குழந்தையின் படைப்பாற்றலைக் காட்டுங்கள்",
     uploadSubtitle: "குழந்தை வரைந்த விநாயகர் ஓவியப் படம் மற்றும் சிறு வீடியோவை பதிவேற்றம் செய்யவும்.",
     drawingTitle: "விநாயகர் ஓவியம்",
     drawingSubtitle: "குழந்தை வரைந்த படத்தைப் பதிவேற்றவும்",
     videoTitle: "செயல்பாட்டு வீடியோ",
     videoSubtitle: "குழந்தை வரைவதை வீடியோவாகப் பதிவேற்றவும்",
-    continueToActivity: "செயல்பாட்டுக்குச் செல்லவும்",
     drawingRequiredTitle: "ஓவியப் படம் தேவை 🎨",
     drawingRequiredMsg: "தொடர உங்கள் குழந்தையின் விநாயகர் ஓவியப் படத்தைத் தேர்ந்தெடுத்து அப்லோட் செய்யவும்.",
     videoRequiredTitle: "செயல்பாட்டு வீடியோ தேவை 🎥",
     videoRequiredMsg: "தொடர குழந்தைக் படம் வரையும் சிறு வீடியோவைப் பதிவேற்றம் செய்யவும்.",
 
     // Dot Activity Page
-    activityStep3: "படி 03 • புள்ளி விளையாட்டு",
+    activityStep3: "படி 02 • புள்ளி விளையாட்டு",
     activityTitle: "ஸ்ரீ விநாயகரை இணைப்போம்",
     activitySubtitle: "1 முதல் 50 வரையிலான புள்ளிகளை இணைத்து விநாயகரை வெளிப்படுத்துங்கள்.",
     connectAllDots: "அனைத்துப் புள்ளிகளையும் இணைக்க",
     reset: "மீட்டமைக்க",
-    continueToRewards: "பரிசுகளுக்குத் தொடரவும்",
+    continueToRewards: "கோப்புகள் அப்லோட் செய்ய தொடரவும்",
 
     // Complete / Success Page
     completeTitle: "பதிவு வெற்றிகரமாக முடிந்தது!",

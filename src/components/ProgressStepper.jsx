@@ -1,13 +1,16 @@
 import React from 'react';
 import { UserCheck, Upload, Puzzle, Award, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ProgressStepper = ({ currentStep = 1 }) => {
+  const { t } = useLanguage();
+
   const steps = [
-    { number: 1, label: 'Registration', icon: UserCheck },
-    { number: 2, label: 'Upload Drawing', icon: Upload },
-    { number: 3, label: 'Dot Activity', icon: Puzzle },
-    { number: 4, label: 'Reward Points', icon: Award },
+    { number: 1, label: t('stepperStep1') || 'Registration', icon: UserCheck },
+    { number: 2, label: t('stepperStep2') || 'Dot Activity', icon: Puzzle },
+    { number: 3, label: t('stepperStep3') || 'Upload Drawing', icon: Upload },
+    { number: 4, label: t('stepperStep4') || 'Reward Points', icon: Award },
   ];
 
   return (

@@ -7,18 +7,13 @@ export const validateRegistrationForm = (formData) => {
 
   if (!formData.childDob || !formData.childDob.trim()) {
     errors.childDob = 'Please select child\'s date of birth';
-  } else {
-    const dobYear = new Date(formData.childDob).getFullYear();
-    if (isNaN(dobYear) || dobYear < 2021 || dobYear > 2025) {
-      errors.childDob = 'Date of birth must be between year 2021 and 2025 (Max 5 years)';
-    }
   }
 
   if (!formData.childAge || formData.childAge === '') {
     errors.childAge = 'Please enter child\'s age';
   } else {
     const age = parseInt(formData.childAge, 10);
-    if (isNaN(age) || age < 1) {
+    if (isNaN(age) || age < 0) {
       errors.childAge = 'Please enter a valid age';
     }
   }
@@ -53,5 +48,5 @@ export const validateRegistrationForm = (formData) => {
 
 export const isAgeEligible = (age) => {
   const numAge = parseInt(age, 10);
-  return !isNaN(numAge) && numAge <= 5;
+  return !isNaN(numAge) && numAge >= 3 && numAge <= 5;
 };

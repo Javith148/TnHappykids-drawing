@@ -13,7 +13,7 @@ export const Activity = () => {
 
   const handleActivityDone = () => {
     completeActivity();
-    navigate('/advertisement');
+    navigate('/upload');
   };
 
   return (
@@ -22,7 +22,7 @@ export const Activity = () => {
         
         {/* Stepper Progress */}
         <div className="w-full mb-4 max-w-2xl">
-          <ProgressStepper currentStep={3} />
+          <ProgressStepper currentStep={2} />
         </div>
 
 

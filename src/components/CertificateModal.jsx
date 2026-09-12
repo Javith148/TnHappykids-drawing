@@ -197,7 +197,7 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
 
       setStatusMsg({
         type: 'success',
-        text: 'Certificate image downloaded successfully & saved local data cleared! 🎨',
+        text: 'Certificate image downloaded successfully & saved local data cleared!',
       });
     } catch (err) {
       console.error('Error generating certificate image:', err);
@@ -227,29 +227,15 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
         certificateBase64,
       };
 
-      let response = await fetch('/api/send-certificate', {
+      const response = await fetch('/api/send-certificate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      // If relative endpoint returns non-JSON (e.g. 404 HTML), try falling back to port 5000
-      let contentType = response.headers.get('content-type');
-      if (!response.ok || !contentType || !contentType.includes('application/json')) {
-        try {
-          response = await fetch('http://localhost:5000/api/send-certificate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          contentType = response.headers.get('content-type');
-        } catch (fallbackErr) {
-          console.log('Port 5000 fallback connection error:', fallbackErr);
-        }
-      }
-
+      const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Server returned invalid response. Please ensure email server is active.');
+        throw new Error('Server returned invalid response.');
       }
 
       const result = await response.json();
@@ -283,126 +269,125 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-sm overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-4xl bg-stone-900 rounded-3xl p-4 sm:p-6 shadow-2xl border-2 border-amber-400/60 my-auto"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 12 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="relative w-full max-w-2xl bg-stone-900 rounded-3xl p-3 sm:p-4 shadow-2xl border-2 border-amber-400/60 max-h-[92vh] flex flex-col justify-between overflow-hidden mt-6 sm:mt-8"
         >
           {/* Top Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 transition-colors cursor-pointer"
+            className="absolute top-2.5 right-2.5 z-20 p-1.5 rounded-full bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
 
           {/* Title Header */}
-          <div className="flex items-center gap-2 mb-4">
-            <Award className="w-6 h-6 text-amber-400" />
-            <h3 className="text-xl sm:text-2xl font-extrabold text-amber-100 font-heading">
-              Official E-Certificate of Completion 🏆
+          <div className="flex items-center gap-2 mb-2">
+            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+            <h3 className="text-sm sm:text-lg font-extrabold text-amber-100 font-heading">
+              Official E-Certificate of Completion
             </h3>
           </div>
 
           {/* Status Message Banner */}
           {statusMsg && (
             <div
-              className={`mb-4 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-between border ${
-                statusMsg.type === 'success'
-                  ? 'bg-emerald-950/80 border-emerald-500/80 text-emerald-200'
-                  : 'bg-rose-950/80 border-rose-500/80 text-rose-200'
-              }`}
+              className={`mb-2 px-3 py-1 rounded-xl text-xs font-bold flex items-center justify-between border ${statusMsg.type === 'success'
+                ? 'bg-emerald-950/80 border-emerald-500/80 text-emerald-200'
+                : 'bg-rose-950/80 border-rose-500/80 text-rose-200'
+                }`}
             >
               <span>{statusMsg.text}</span>
               <button onClick={() => setStatusMsg(null)} className="ml-2 text-stone-400 hover:text-white">
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
           )}
 
           {/* E-CERTIFICATE DISPLAY CONTAINER */}
-          <div className="w-full overflow-x-auto p-1 bg-stone-950/80 rounded-2xl mb-5 shadow-inner">
-            <div className="w-[800px] h-[565px] mx-auto bg-[#FFFDF5] text-stone-900 p-8 relative flex flex-col justify-between border-[12px] border-amber-600 shadow-2xl select-none">
+          <div className="w-full overflow-x-auto p-1 bg-stone-950/80 rounded-2xl mb-2.5 shadow-inner flex justify-center">
+            <div className="w-[520px] h-[355px] mx-auto bg-[#FFFDF5] text-stone-900 p-4 relative flex flex-col justify-between border-[6px] border-amber-600 shadow-2xl select-none shrink-0">
               {/* Inner Double Gold Border */}
-              <div className="absolute inset-2 border-2 border-amber-400/80 pointer-events-none" />
-              <div className="absolute inset-4 border border-amber-300/50 pointer-events-none" />
+              <div className="absolute inset-1 border-2 border-amber-400/80 pointer-events-none" />
+              <div className="absolute inset-2.5 border border-amber-300/50 pointer-events-none" />
 
               {/* CERTIFICATE HEADER */}
-              <div className="text-center pt-2 relative z-10">
-                <div className="flex justify-center items-center gap-3 mb-2">
+              <div className="text-center pt-0.5 relative z-10">
+                <div className="flex justify-center items-center gap-1.5 mb-0.5">
                   <img
                     src={logoImg}
                     alt="TN Happy Kids Logo"
-                    className="h-14 w-auto object-contain bg-white px-2 py-1 rounded-lg border border-amber-200 shadow-sm"
+                    className="h-7 w-auto object-contain bg-white px-1 py-0.5 rounded border border-amber-200 shadow-sm"
                   />
                 </div>
-                <h4 className="text-xs font-black tracking-[0.25em] text-amber-800 uppercase">
+                <h4 className="text-[8px] font-black tracking-[0.18em] text-amber-800 uppercase">
                   TN HAPPY KIDS • STATE LEVEL COMPETITION 2026
                 </h4>
                 <h1
-                  className="text-3xl font-extrabold text-orange-600 tracking-wide mt-1 uppercase drop-shadow-sm"
+                  className="text-lg sm:text-xl font-extrabold text-orange-600 tracking-wide mt-0.5 uppercase drop-shadow-sm"
                   style={{ fontFamily: "'Georgia', serif" }}
                 >
                   Certificate of Completion
                 </h1>
-                <p className="text-xs text-amber-900/80 font-bold italic mt-1">
+                <p className="text-[9px] text-amber-900/80 font-bold italic mt-0.5">
                   Vinayagar Chaturthi Kids State Level Drawing & Activity Contest
                 </p>
               </div>
 
               {/* RECIPIENT BODY */}
-              <div className="text-center px-8 relative z-10">
-                <p className="text-xs uppercase font-extrabold text-stone-600 tracking-widest mb-1">
+              <div className="text-center px-3 relative z-10">
+                <p className="text-[8px] uppercase font-extrabold text-stone-600 tracking-widest mb-0.5">
                   This is proudly presented to
                 </p>
-                <div className="inline-block border-b-2 border-amber-500 px-8 py-1 my-1">
-                  <h2 className="text-3xl sm:text-4xl font-extrabold text-amber-950 font-heading">
+                <div className="inline-block border-b-2 border-amber-500 px-5 py-0.5 my-0.5">
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-amber-950 font-heading">
                     {childName}
                   </h2>
                 </div>
-                <p className="text-xs font-bold text-amber-900 mt-2">
-                  Age: <span className="font-extrabold text-orange-600">{childAge}</span> &bull; Parent / Guardian: <span className="font-extrabold text-stone-950">{parentName}</span>
+                <p className="text-[9px] font-bold text-amber-900 mt-0.5">
+                  Age: <span className="font-extrabold text-orange-600">{childAge}</span> &bull; Parent: <span className="font-extrabold text-stone-950">{parentName}</span>
                 </p>
 
-                <p className="text-xs text-stone-700 max-w-lg mx-auto leading-relaxed mt-3 font-medium">
+                <p className="text-[8px] sm:text-[9px] text-stone-700 max-w-sm mx-auto leading-tight mt-1 font-medium">
                   For successfully participating & demonstrating remarkable artistic creativity in the <strong className="text-amber-900">TN Happy Kids State Level Vinayagar Chaturthi Drawing Competition 2026</strong>.
                 </p>
               </div>
 
               {/* CERTIFICATE FOOTER */}
-              <div className="flex items-end justify-between px-6 pb-2 relative z-10 border-t border-amber-200/80 pt-4">
+              <div className="flex items-end justify-between px-3 pb-0.5 relative z-10 border-t border-amber-200/80 pt-1.5">
                 {/* Date Left */}
                 <div className="text-left">
-                  <p className="text-[10px] uppercase tracking-wider font-extrabold text-amber-800">
+                  <p className="text-[7px] uppercase tracking-wider font-extrabold text-amber-800">
                     Date of Issue
                   </p>
-                  <p className="text-xs font-bold text-stone-900 mt-0.5">{formattedDate}</p>
+                  <p className="text-[9px] font-bold text-stone-900 mt-0.5">{formattedDate}</p>
                 </div>
 
                 {/* Official Gold Seal Center */}
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-500 border-4 border-amber-200 shadow-md flex items-center justify-center text-center p-1">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-500 border border-amber-200 shadow-md flex items-center justify-center text-center p-0.5">
                     <div className="w-full h-full rounded-full border border-amber-900/40 flex flex-col items-center justify-center text-amber-950">
-                      <ShieldCheck className="w-5 h-5 text-amber-950" />
-                      <span className="text-[7px] font-black uppercase tracking-tighter">OFFICIAL SEAL</span>
+                      <ShieldCheck className="w-3 h-3 text-amber-950" />
+                      <span className="text-[4px] font-black uppercase tracking-tighter">SEAL</span>
                     </div>
                   </div>
-                  <span className="text-[9px] font-bold text-amber-900 mt-1 uppercase tracking-wider">
-                    TN HAPPY KIDS APPROVED
+                  <span className="text-[6px] font-bold text-amber-900 mt-0.5 uppercase tracking-wider">
+                    APPROVED
                   </span>
                 </div>
 
                 {/* Director Signature Right */}
                 <div className="text-right">
-                  <div className="h-8 flex items-center justify-end">
-                    <span className="font-serif italic font-extrabold text-amber-900 text-sm tracking-wide">
+                  <div className="h-4 flex items-center justify-end">
+                    <span className="font-serif italic font-extrabold text-amber-900 text-[11px] tracking-wide">
                       TN Happy Kids Mgmt
                     </span>
                   </div>
-                  <div className="w-32 border-b border-amber-800 ml-auto my-0.5" />
-                  <p className="text-[10px] uppercase tracking-wider font-extrabold text-amber-800">
+                  <div className="w-20 border-b border-amber-800 ml-auto my-0.5" />
+                  <p className="text-[7px] uppercase tracking-wider font-extrabold text-amber-800">
                     Authorized Signature
                   </p>
                 </div>
@@ -411,44 +396,44 @@ export const CertificateModal = ({ isOpen, onClose, data = {} }) => {
           </div>
 
           {/* ACTION BUTTONS & GMAIL SEND FORM */}
-          <div className="bg-stone-950 p-4 rounded-2xl border border-stone-800 flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="bg-stone-950 p-2.5 sm:p-3 rounded-2xl border border-stone-800 flex flex-col md:flex-row gap-2.5 items-center justify-between">
             {/* Download Image Button */}
             <div className="w-full md:w-auto">
               <button
                 onClick={handleDownloadImage}
-                className="w-full md:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full md:w-auto px-4 py-2 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
-                <Download className="w-4 h-4" />
-                <span>Download Certificate Image (PNG)</span>
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Certificate (PNG)</span>
               </button>
             </div>
 
             {/* Email Send Form */}
-            <form onSubmit={handleSendEmail} className="flex items-center gap-2 w-full md:w-auto flex-1 max-w-md">
+            <form onSubmit={handleSendEmail} className="flex items-center gap-1.5 w-full md:w-auto flex-1 max-w-md">
               <div className="relative flex-1">
-                <Mail className="w-4 h-4 text-amber-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Mail className="w-3.5 h-3.5 text-amber-500 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="email"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   placeholder="Enter Gmail address"
-                  className="w-full pl-9 pr-3 py-2.5 bg-stone-900 border border-stone-700 rounded-xl text-xs text-white placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                  className="w-full pl-8 pr-2 py-1.5 bg-stone-900 border border-stone-700 rounded-xl text-xs text-white placeholder-stone-400 focus:outline-none focus:border-amber-400"
                 />
               </div>
               <button
                 type="submit"
                 disabled={isSending}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl flex items-center gap-1 transition-colors cursor-pointer shrink-0"
               >
                 {isSending ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     <span>Sending...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
-                    <span>Send Image to Gmail</span>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Send to Gmail</span>
                   </>
                 )}
               </button>

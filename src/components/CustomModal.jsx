@@ -2,18 +2,26 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, AlertCircle } from 'lucide-react';
 
-export const CustomModal = ({ isOpen, onClose, title, message, buttonText = "Back to Registration" }) => {
+export const CustomModal = ({ isOpen, onClose, onConfirm, title, message, buttonText = "Back to Registration", children }) => {
   if (!isOpen) return null;
+
+  const handleButtonClick = () => {
+    if (onConfirm) {
+      onConfirm();
+    } else if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-amber-950/60 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-10 sm:pt-16 bg-amber-950/60 backdrop-blur-sm">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          initial={{ opacity: 0, scale: 0.8, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
+          exit={{ opacity: 0, scale: 0.8, y: 30 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-md bg-gradient-to-b from-[#FFF9EE] via-[#FFF3D6] to-[#FFE8B8] rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center overflow-hidden"
+          className="relative w-full max-w-md bg-gradient-to-b from-[#FFF9EE] via-[#FFF3D6] to-[#FFE8B8] rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center overflow-hidden -translate-y-5 mt-4 sm:mt-8 my-auto"
         >
           {/* Top Marigold Garlands */}
           <div className="absolute -top-3 left-0 right-0 flex justify-between px-4 opacity-90">
@@ -21,8 +29,6 @@ export const CustomModal = ({ isOpen, onClose, title, message, buttonText = "Bac
             <img src="/assets/images/marigold.png" alt="Marigold" className="w-10 h-10 animate-bounce delay-100" />
             <img src="/assets/images/marigold.png" alt="Marigold" className="w-10 h-10 animate-bounce delay-200" />
           </div>
-
-
 
           {/* Close Icon Button */}
           <button
@@ -52,23 +58,25 @@ export const CustomModal = ({ isOpen, onClose, title, message, buttonText = "Bac
           </div>
 
           {/* Modal Header */}
-          <h3 className="font-heading text-2xl font-extrabold text-amber-950 mb-2">
+          <h3 className="font-heading text-xl sm:text-2xl font-extrabold text-amber-950 mb-2">
             {title || "Eligible Age Notice"}
           </h3>
 
           {/* Modal Message */}
-          <div className="bg-amber-100/80 rounded-2xl p-4 mb-6 border border-amber-300 shadow-inner">
-            <p className="text-amber-900 font-medium text-base leading-relaxed">
+          <div className="bg-amber-100/80 rounded-2xl p-4 mb-4 border border-amber-300 shadow-inner text-left sm:text-center">
+            <p className="text-amber-900 font-medium text-xs sm:text-sm leading-relaxed">
               "{message || "This competition is specially designed for children aged 3–5 years."}"
             </p>
           </div>
+
+          {children}
 
           {/* Action Button */}
           <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            onClick={onClose}
-            className="w-full py-3.5 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-2xl font-bold text-base shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 border-2 border-yellow-300 cursor-pointer flex items-center justify-center gap-2"
+            onClick={handleButtonClick}
+            className="w-full py-3.5 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-2xl font-bold text-sm sm:text-base shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 border-2 border-yellow-300 cursor-pointer flex items-center justify-center gap-2 mt-4"
           >
             <span>{buttonText}</span>
           </motion.button>

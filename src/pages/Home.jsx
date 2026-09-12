@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, Palette, Puzzle, Trophy, ArrowRight, Star, Heart, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { FestiveBackground } from '../components/FestiveBackground';
-import { RegisterInstructionModal } from '../components/RegisterInstructionModal';
 import { useLanguage } from '../context/LanguageContext';
 
 export const Home = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
-  const [instructionModalOpen, setInstructionModalOpen] = useState(false);
 
   const timelineSteps = [
     {
@@ -74,13 +72,13 @@ export const Home = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <button
-                  onClick={() => setInstructionModalOpen(true)}
+                <Link
+                  to="/register"
                   className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-full font-heading font-extrabold text-lg shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-105 transition-all flex items-center justify-center gap-2 border-2 border-yellow-300 cursor-pointer"
                 >
                   <Sparkles className="w-5 h-5 text-yellow-200" />
                   <span>{t('registerNow')}</span>
-                </button>
+                </Link>
 
                 <button
                   onClick={() => {
@@ -454,21 +452,16 @@ export const Home = () => {
 
           {/* Bottom Callout */}
           <div className="mt-16 text-center">
-            <button
-              onClick={() => setInstructionModalOpen(true)}
+            <Link
+              to="/register"
               className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white rounded-full font-heading font-extrabold text-lg shadow-xl shadow-orange-500/30 hover:scale-105 transition-transform border-2 border-yellow-300 cursor-pointer"
             >
               <span>Join Competition Now</span>
               <Sparkles className="w-5 h-5 text-yellow-200" />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
-
-      <RegisterInstructionModal
-        isOpen={instructionModalOpen}
-        onClose={() => setInstructionModalOpen(false)}
-      />
     </FestiveBackground>
   );
 };
